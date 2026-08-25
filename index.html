@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Education Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-container">
+      <button id="back-btn" class="btn-back" onclick="goBack()">← back</button>
+      <h1 class="logo" onclick="navigateTo('home')">Education Hub</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- View 1: Track Selection -->
+    <section id="view-home" class="page-view">
+      <h2 class="section-title">Select Track</h2>
+      <div class="grid-2">
+        <div class="card track-card" onclick="selectTrack('varsity')">
+          <h2>Varsity Preparation</h2>
+          <p>Physics, Chemistry, Higher Math, Biology, English, ICT</p>
+        </div>
+        <div class="card track-card" onclick="selectTrack('medical')">
+          <h2>Medical Preparation</h2>
+          <p>Physics, Chemistry, Biology, English, General Knowledge</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 2: Subject List -->
+    <section id="view-subjects" class="page-view">
+      <h2 id="subject-heading" class="section-title">Subjects</h2>
+      <div id="subjects-grid" class="grid-3"></div>
+    </section>
+
+    <!-- View 3: Class Cards (Apar's Classroom Style) -->
+    <section id="view-classes" class="page-view">
+      <h2 id="class-heading" class="section-title">Classes</h2>
+      <div id="classes-grid" class="grid-cards"></div>
+    </section>
+
+    <!-- View 4: Seamless Video Player -->
+    <section id="view-player" class="page-view">
+      <div class="player-header">
+        <h2 id="player-title">Class Lecture</h2>
+        <a id="player-pdf-btn" target="_blank" class="btn-sheet">Lecture Sheet</a>
+      </div>
+      <div class="video-wrapper">
+        <iframe id="video-frame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
