@@ -182,6 +182,7 @@
   </header>
 
   <main class="container">
+    <!-- View 1: Track Selection -->
     <section id="view-home" class="page-view active">
       <h2 class="section-title">Select Track</h2>
       <div class="grid-2">
@@ -196,16 +197,25 @@
       </div>
     </section>
 
+    <!-- View 2: Subject List -->
     <section id="view-subjects" class="page-view">
       <h2 id="subject-heading" class="section-title">Subjects</h2>
       <div id="subjects-grid" class="grid-3"></div>
     </section>
 
+    <!-- View 3: Chapter List -->
+    <section id="view-chapters" class="page-view">
+      <h2 id="chapter-heading" class="section-title">Chapters</h2>
+      <div id="chapters-grid" class="grid-3"></div>
+    </section>
+
+    <!-- View 4: Class Cards -->
     <section id="view-classes" class="page-view">
       <h2 id="class-heading" class="section-title">Classes</h2>
       <div id="classes-grid" class="grid-cards"></div>
     </section>
 
+    <!-- View 5: Video Player -->
     <section id="view-player" class="page-view">
       <div class="player-header">
         <h2 id="player-title">Class Lecture</h2>
@@ -247,25 +257,35 @@
           { id: "m-gk", name: "General Knowledge (GK)" }
         ]
       },
-      classes: {
+      
+      // Chapters mapped by Subject ID
+      chapters: {
         "v-phy-1": [
+          { id: "v-phy-1-ch2", name: "Vector (ভেক্টর)" },
+          { id: "v-phy-1-ch3", name: "Dynamics (গতিবিদ্যা)" }
+        ]
+      },
+
+      // Classes mapped by Chapter ID
+      classes: {
+        "v-phy-1-ch2": [
           {
-            id: "v-phy-1-c1",
-            title: "Class 1 : ভেক্টর পর্ব ১ পার্ট ১",
+            id: "cls-1",
+            title: "Class 1 : ভেক্টর পর্ব ১ পাঠ ১",
             topics: "Vector Addition, Dot Product, Cross Product",
-            youtubeUrl: "https://www.youtube.com/watch?v=HWiqe34wKbs",
+            youtubeUrl: "hhttps://www.youtube.com/watch?v=HWiqe34wKbs",
             pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
           },
           {
-            id: "v-phy-1-c2",
-            title: "Class 2 : ভেক্টর পর্ব ১ পার্ট ২",
+            id: "cls-2",
+            title: "Class 2 : ভেক্টর পর্ব ১ পাঠ ২",
             topics: "Gradient, Divergence, Curl",
             youtubeUrl: "https://www.youtube.com/watch?v=K17X8voF4bo&feature=youtu.be",
             pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
           },
           {
-            id: "v-phy-1-c3",
-            title: "Class 2 : Vector ( পর্ব ২ পার্ট ১ )",
+            id: "cls-3",
+            title: "Class 3 : Vector ( পর্ব ২ পাঠ ১ )",
             topics: "Gradient, Divergence, Curl",
             youtubeUrl: "https://www.youtube.com/watch?v=-LahLBzb4D8",
             pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
@@ -321,14 +341,36 @@
     }
 
     function selectSubject(subjectId, subjectName) {
-      document.getElementById('class-heading').innerText = subjectName;
+      document.getElementById('chapter-heading').innerText = subjectName;
+      const container = document.getElementById('chapters-grid');
+      container.innerHTML = '';
+
+      const chapterList = courseData.chapters[subjectId] || [];
+
+      if (chapterList.length === 0) {
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-muted);">No chapters added yet.</p>';
+      } else {
+        chapterList.forEach(ch => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `<h3>${ch.name}</h3>`;
+          card.onclick = () => selectChapter(ch.id, ch.name);
+          container.appendChild(card);
+        });
+      }
+
+      navigateTo('chapters');
+    }
+
+    function selectChapter(chapterId, chapterName) {
+      document.getElementById('class-heading').innerText = chapterName;
       const container = document.getElementById('classes-grid');
       container.innerHTML = '';
 
-      const classList = courseData.classes[subjectId] || [];
+      const classList = courseData.classes[chapterId] || [];
 
       if (classList.length === 0) {
-        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-muted);">No class lectures added yet.</p>';
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-muted);">No classes added for this chapter yet.</p>';
       } else {
         classList.forEach(cls => {
           const ytId = getYoutubeId(cls.youtubeUrl);
