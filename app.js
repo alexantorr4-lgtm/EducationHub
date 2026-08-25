@@ -56,3 +56,4 @@ function loadVideo(chapter) {
 }
 
 document.getElementById('home-btn').onclick = () => showView('track-view');
+navigateTo('home', false);
