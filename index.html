@@ -4,7 +4,173 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Education Hub</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #131a2a;
+      --card-hover: #1a243b;
+      --accent-blue: #2563eb;
+      --accent-hover: #1d4ed8;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: #070a12;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      color: var(--text-main);
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-back {
+      background: #1e293b;
+      color: var(--text-main);
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .page-view { display: none; }
+    .page-view.active { display: block; }
+
+    .section-title {
+      text-align: center;
+      color: #38bdf8;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-blue);
+    }
+
+    .card h2, .card h3 { color: var(--text-main); margin-bottom: 0.5rem; }
+    .card p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .class-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .thumbnail-box {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .thumbnail-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .class-content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .class-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .topics-list { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; flex-grow: 1; }
+    .materials-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+
+    .btn-sheet {
+      display: inline-block;
+      background: var(--accent-blue);
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-sheet:hover { background: var(--accent-hover); }
+
+    .player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -16,7 +182,6 @@
   </header>
 
   <main class="container">
-    <!-- View 1: Track Selection -->
     <section id="view-home" class="page-view active">
       <h2 class="section-title">Select Track</h2>
       <div class="grid-2">
@@ -31,19 +196,16 @@
       </div>
     </section>
 
-    <!-- View 2: Subject List -->
     <section id="view-subjects" class="page-view">
       <h2 id="subject-heading" class="section-title">Subjects</h2>
       <div id="subjects-grid" class="grid-3"></div>
     </section>
 
-    <!-- View 3: Class Cards (Apar's Classroom Style) -->
     <section id="view-classes" class="page-view">
       <h2 id="class-heading" class="section-title">Classes</h2>
       <div id="classes-grid" class="grid-cards"></div>
     </section>
 
-    <!-- View 4: Seamless Video Player -->
     <section id="view-player" class="page-view">
       <div class="player-header">
         <h2 id="player-title">Class Lecture</h2>
@@ -55,7 +217,148 @@
     </section>
   </main>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script>
+    const courseData = {
+      varsity: {
+        title: "Varsity Track",
+        subjects: [
+          { id: "v-phy-1", name: "Physics 1st Paper" },
+          { id: "v-phy-2", name: "Physics 2nd Paper" },
+          { id: "v-chem-1", name: "Chemistry 1st Paper" },
+          { id: "v-chem-2", name: "Chemistry 2nd Paper" },
+          { id: "v-math-1", name: "Higher Math 1st Paper" },
+          { id: "v-math-2", name: "Higher Math 2nd Paper" },
+          { id: "v-bio-1", name: "Biology 1st Paper" },
+          { id: "v-bio-2", name: "Biology 2nd Paper" },
+          { id: "v-eng", name: "English" },
+          { id: "v-ict", name: "ICT" }
+        ]
+      },
+      medical: {
+        title: "Medical Track",
+        subjects: [
+          { id: "m-phy-1", name: "Physics 1st Paper" },
+          { id: "m-phy-2", name: "Physics 2nd Paper" },
+          { id: "m-chem-1", name: "Chemistry 1st Paper" },
+          { id: "m-chem-2", name: "Chemistry 2nd Paper" },
+          { id: "m-bio-1", name: "Biology 1st Paper" },
+          { id: "m-bio-2", name: "Biology 2nd Paper" },
+          { id: "m-eng", name: "English" },
+          { id: "m-gk", name: "General Knowledge (GK)" }
+        ]
+      },
+      classes: {
+        "v-phy-1": [
+          {
+            id: "v-phy-1-c1",
+            title: "Class 1 : Physical World & Vectors",
+            topics: "Vector Addition, Dot Product, Cross Product",
+            youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            pdfUrl: "https://example.com/lecture-sheet-1.pdf"
+          },
+          {
+            id: "v-phy-1-c2",
+            title: "Class 2 : Vector Calculus",
+            topics: "Gradient, Divergence, Curl",
+            youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            pdfUrl: "https://example.com/lecture-sheet-2.pdf"
+          }
+        ]
+      }
+    };
+
+    let navigationHistory = ['home'];
+
+    function getYoutubeId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    function navigateTo(viewId, pushState = true) {
+      document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
+      document.getElementById(`view-${viewId}`).classList.add('active');
+
+      const backBtn = document.getElementById('back-btn');
+      backBtn.style.display = viewId === 'home' ? 'none' : 'block';
+
+      if (pushState) {
+        navigationHistory.push(viewId);
+      }
+    }
+
+    function goBack() {
+      if (navigationHistory.length > 1) {
+        navigationHistory.pop();
+        const previousView = navigationHistory[navigationHistory.length - 1];
+        navigateTo(previousView, false);
+      }
+    }
+
+    function selectTrack(trackKey) {
+      const track = courseData[trackKey];
+      document.getElementById('subject-heading').innerText = track.title;
+      
+      const container = document.getElementById('subjects-grid');
+      container.innerHTML = '';
+
+      track.subjects.forEach(sub => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h3>${sub.name}</h3>`;
+        card.onclick = () => selectSubject(sub.id, sub.name);
+        container.appendChild(card);
+      });
+
+      navigateTo('subjects');
+    }
+
+    function selectSubject(subjectId, subjectName) {
+      document.getElementById('class-heading').innerText = subjectName;
+      const container = document.getElementById('classes-grid');
+      container.innerHTML = '';
+
+      const classList = courseData.classes[subjectId] || [];
+
+      if (classList.length === 0) {
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-muted);">No class lectures added yet.</p>';
+      } else {
+        classList.forEach(cls => {
+          const ytId = getYoutubeId(cls.youtubeUrl);
+          const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : '';
+
+          const card = document.createElement('div');
+          card.className = 'class-card';
+          card.innerHTML = `
+            <div class="thumbnail-box" onclick="playVideo('${cls.title}', '${cls.youtubeUrl}', '${cls.pdfUrl}')">
+              <img src="${thumbUrl}" alt="${cls.title}">
+            </div>
+            <div class="class-content">
+              <h3 class="class-title">${cls.title}</h3>
+              <p class="topics-list"><strong>Topics:</strong> ${cls.topics}</p>
+              <div class="materials-label">Lesson Materials:</div>
+              <a href="${cls.pdfUrl}" target="_blank" class="btn-sheet">Lecture Sheet</a>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      navigateTo('classes');
+    }
+
+    function playVideo(title, youtubeUrl, pdfUrl) {
+      const ytId = getYoutubeId(youtubeUrl);
+      document.getElementById('player-title').innerText = title;
+      
+      const pdfBtn = document.getElementById('player-pdf-btn');
+      pdfBtn.href = pdfUrl;
+      
+      const frame = document.getElementById('video-frame');
+      frame.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3`;
+
+      navigateTo('player');
+    }
+  </script>
 </body>
 </html>
