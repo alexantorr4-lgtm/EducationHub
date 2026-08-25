@@ -1,9 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title >Education Hub</title>
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #131a2a;
+      --card-hover: #1a243b;
+      --accent-blue: #2563eb;
+      --accent-hover: #1d4ed8;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: #070a12;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      color: var(--text-main);
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-back {
+      background: #1e293b;
+      color: var(--text-main);
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      display: none;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .page-view { display: none; }
+    .page-view.active { display: block; }
+
+    .section-title {
+      text-align: center;
+      color: #38bdf8;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-blue);
+    }
+
+    .card h2, .card h3 { color: var(--text-main); margin-bottom: 0.5rem; }
+    .card p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .class-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .thumbnail-box {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .thumbnail-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .class-content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .class-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .topics-list { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; flex-grow: 1; }
+    .materials-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+
+    .btn-sheet {
+      display: inline-block;
+      background: var(--accent-blue);
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-sheet:hover { background: var(--accent-hover); }
+
+    .player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-container">
+      <button id="back-btn" class="btn-back" onclick="goBack()">← back</button>
+      <h1 class="logo" onclick="navigateTo('home')">Education Hub</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- View 1: Track Selection -->
+    <section id="view-home" class="page-view active">
+      <h2 class="section-title">Select Track</h2>
+      <div class="grid-2">
+        <div class="card track-card" onclick="selectTrack('varsity')">
+          <h2>Varsity Preparation</h2>
+          <p>Physics, Chemistry, Higher Math, Biology, English, ICT</p>
+        </div>
+        <div class="card track-card" onclick="selectTrack('medical')">
+          <h2>Medical Preparation</h2>
+          <p>Physics, Chemistry, Biology, English, General Knowledge</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- View 2: Subject List -->
+    <section id="view-subjects" class="page-view">
+      <h2 id="subject-heading" class="section-title">Subjects</h2>
+      <div id="subjects-grid" class="grid-3"></div>
+    </section>
+
+    <!-- View 3: Chapter List -->
+    <section id="view-chapters" class="page-view">
+      <h2 id="chapter-heading" class="section-title">Chapters</h2>
+      <div id="chapters-grid" class="grid-3"></div>
+    </section>
+
+    <!-- View 4: Class Cards -->
+    <section id="view-classes" class="page-view">
+      <h2 id="class-heading" class="section-title">Classes</h2>
+      <div id="classes-grid" class="grid-cards"></div>
+    </section>
+
+    <!-- View 5: Video Player -->
+    <section id="view-player" class="page-view">
+      <div class="player-header">
+        <h2 id="player-title">Class Lecture</h2>
+        <a id="player-pdf-btn" target="_blank" class="btn-sheet">Lecture Sheet</a>
+      </div>
+      <div class="video-wrapper">
+        <iframe id="video-frame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const courseData = {
+      varsity: {
+        title: "Varsity Track",
+        subjects: [
+          { id: "v-phy-1", name: "Physics 1st Paper" },
+          { id: "v-phy-2", name: "Physics 2nd Paper" },
+          { id: "v-chem-1", name: "Chemistry 1st Paper" },
+          { id: "v-chem-2", name: "Chemistry 2nd Paper" },
+          { id: "v-math-1", name: "Higher Math 1st Paper" },
+          { id: "v-math-2", name: "Higher Math 2nd Paper" },
+          { id: "v-bio-1", name: "Biology 1st Paper" },
+          { id: "v-bio-2", name: "Biology 2nd Paper" },
+          { id: "v-eng", name: "English" },
+          { id: "v-ict", name: "ICT" }
+        ]
+      },
+      medical: {
+        title: "Medical Track",
+        subjects: [
+          { id: "m-phy-1", name: "Physics 1st Paper" },
+          { id: "m-phy-2", name: "Physics 2nd Paper" },
+          { id: "m-chem-1", name: "Chemistry 1st Paper" },
+          { id: "m-chem-2", name: "Chemistry 2nd Paper" },
+          { id: "m-bio-1", name: "Biology 1st Paper" },
+          { id: "m-bio-2", name: "Biology 2nd Paper" },
+          { id: "m-eng", name: "English" },
+          { id: "m-gk", name: "General Knowledge (GK)" }
+        ]
+      },
+      
+      // Chapters mapped by Subject ID
+      chapters: {
+        "v-phy-1": [
+          { id: "v-phy-1-ch1", name: "Physical World and Measurement (ভৌত জগৎ ও পরিমাপ)" },
+          { id: "v-phy-1-ch2", name: "Vector (ভেক্টর)" },
+          { id: "v-phy-1-ch3", name: "Dynamics (গতিবিদ্যা)" },
+          { id: "v-phy-1-ch4", name: "Newtonian Mechanics (নিউটোনিয়ান বলবিদ্যা)" },
+          { id: "v-phy-1-ch5", name: "Work, Energy and Power (কাজ, ক্ষমতা ও শক্তি)" },
+          { id: "v-phy-1-ch6", name: "Gravitation and Gravity (মহাকর্ষ ও অভিকর্ষ)" },
+          { id: "v-phy-1-ch7", name: "Structural Properties of Matter (পদার্থের গাঠনিক ধর্ম)" },
+          { id: "v-phy-1-ch8", name: "Periodic Motion (পর্যায়বৃত্ত গতি)" },
+          { id: "v-phy-1-ch9", name: "Waves (তরঙ্গ)" },
+          { id: "v-phy-1-ch10", name: "Ideal Gas and Kinetic Theory of Gases (আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব)" }
+        ],
+        "v-phy-2": [
+          { id: "v-phy-2-ch1", name: "Thermodynamics (তাপগতিবিদ্যা)" },
+          { id: "v-phy-2-ch2", name: "Electrostatics (স্থির তড়িৎ)" },
+          { id: "v-phy-2-ch3", name: "Current Electricity (চল তড়িৎ)" },
+          { id: "v-phy-2-ch4", name: "Magnetic Effects of Electric Current and Magnetism (তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চৌম্বকত্ব)" },
+          { id: "v-phy-2-ch5", name: "Electromagnetic Induction and Alternating Current (তাড়িৎচৌম্বকীয় আবেশ ও পরিবর্তী প্রবাহ)" },
+          { id: "v-phy-2-ch6", name: "Geometrical Optics (জ্যামিতিক আলোকবিজ্ঞান)" },
+          { id: "v-phy-2-ch7", name: "Wave Optics (ভৌত আলোকবিজ্ঞান)" },
+          { id: "v-phy-2-ch8", name: "Introduction to Modern Physics (আধুনিক পদার্থবিজ্ঞানের সূচনা)" },
+          { id: "v-phy-2-ch9", name: "Atomic Model and Nuclear Physics (পরমাণুর মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান)" },
+          { id: "v-phy-2-ch10", name: "Semiconductor and Electronics (সেমিকন্ডাক্টর ও ইলেকট্রনিক্স)" },
+          { id: "v-phy-2-ch11", name: "Astronomy (জ্যোতির্বিজ্ঞান)" }
+        ],
+        "v-chem-1": [
+          { id: "v-chem-1-ch1", name: "Safe Use of Laboratory (ল্যাবরেটরির নিরাপদ ব্যবহার)" },
+          { id: "v-chem-1-ch2", name: "Qualitative Chemistry (গুণগত রসায়ন)" },
+          { id: "v-chem-1-ch3", name: "Periodic Properties and Chemical Bonding (মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন)" },
+          { id: "v-chem-1-ch4", name: "Chemical Change (রাসায়নিক পরিবর্তন)" },
+          { id: "v-chem-1-ch5", name: "Economic Chemistry (কর্মমুখী রসায়ন)" }
+        ],
+        "v-chem-2": [
+          { id: "v-chem-2-ch1", name: "Environmental Chemistry (পরিবেশগত রসায়ন)" },
+          { id: "v-chem-2-ch2", name: "Organic Chemistry (জৈব রসায়ন)" },
+          { id: "v-chem-2-ch3", name: "Quantitative Chemistry (পরিমাণগত রসায়ন)" },
+          { id: "v-chem-2-ch4", name: "Electrochemistry (তড়িৎ রসায়ন)" },
+          { id: "v-chem-2-ch5", name: "Industrial Chemistry (অর্থনৈতিক রসায়ন)" }
+        ],
+        "v-math-1": [
+          { id: "v-math-1-ch1", name: "Matrices and Determinants (ম্যাট্রিক্স ও নির্ণায়ক)" },
+          { id: "v-math-1-ch2", name: "Vectors (ভেক্টর)" },
+          { id: "v-math-1-ch3", name: "Straight Lines (সরলরেখা)" },
+          { id: "v-math-1-ch4", name: "Circle (বৃত্ত)" },
+          { id: "v-math-1-ch5", name: "Permutation and Combination (বিন্যাস ও সমাবেশ)" },
+          { id: "v-math-1-ch6", name: "Trigonometric Ratios of Associated Angles (ত্রিকোণমিতিক অনুপাত)" },
+          { id: "v-math-1-ch7", name: "Trigonometric Ratios of Compound Angles (সংযুক্ত কোণের ত্রিকোণমিতিক অনুপাত)" },
+          { id: "v-math-1-ch8", name: "Functions and Function Graphs (ফাংশন ও ফাংশনের লেখচিত্র)" },
+          { id: "v-math-1-ch9", name: "Differentiation (অন্তরীকরণ)" },
+          { id: "v-math-1-ch10", name: "Integration (যৌগজীকরণ)" }
+        ],
+        "v-math-2": [
+          { id: "v-math-2-ch1", name: "Real Numbers and Inequalities (বাস্তব সংখ্যা ও অসমতা)" },
+          { id: "v-math-2-ch2", name: "Linear Programming (রৈখিক প্রোগ্রামন)" },
+          { id: "v-math-2-ch3", name: "Complex Numbers (জটিল সংখ্যা)" },
+          { id: "v-math-2-ch4", name: "Polynomials and Polynomial Equations (বহুপদী ও বহুপদী সমীকরণ)" },
+          { id: "v-math-2-ch5", name: "Binomial Expansion (দ্বিপদী বিস্তার)" },
+          { id: "v-math-2-ch6", name: "Conics (কনিক)" },
+          { id: "v-math-2-ch7", name: "Inverse Trigonometric Functions and Trigonometric Equations (বিপরীত ত্রিকোণমিতিক ফাংশন ও ত্রিকোণমিতিক সমীকরণ)" },
+          { id: "v-math-2-ch8", name: "Statics (স্থিতিবিদ্যা)" },
+          { id: "v-math-2-ch9", name: "Motion of Particles in a Plane (সমতলে বস্তুকণার গতি)" },
+          { id: "v-math-2-ch10", name: "Measures of Dispersion and Probability (বিস্তার পরিমাপ ও সম্ভাবনা)" }
+        ],
+        "v-bio-1": [
+          { id: "v-bio-1-ch1", name: "Cell and its Structure (কোষ ও এর গঠন)" },
+          { id: "v-bio-1-ch2", name: "Cell Division (কোষ বিভাজন)" },
+          { id: "v-bio-1-ch3", name: "Cell Chemistry (কোষ রসায়ন)" },
+          { id: "v-bio-1-ch4", name: "Microorganisms (অণুজীব)" },
+          { id: "v-bio-1-ch5", name: "Algae and Fungi (শৈবাল ও ছত্রাক)" },
+          { id: "v-bio-1-ch6", name: "Bryophyta and Pteridophyta (ব্রায়োফাইটা ও ট্র্যাকিওফাইটা)" },
+          { id: "v-bio-1-ch7", name: "Gymnosperms and Angiosperms (নগ্নজীবী ও আবৃতজীবী উদ্ভিদ)" },
+          { id: "v-bio-1-ch8", name: "Tissue and Tissue System (টিস্যু ও টিস্যুতন্ত্র)" },
+          { id: "v-bio-1-ch9", name: "Plant Physiology (উদ্ভিদ শারীরতত্ত্ব)" },
+          { id: "v-bio-1-ch10", name: "Plant Reproduction (উদ্ভিদ প্রজনন)" },
+          { id: "v-bio-1-ch11", name: "Biotechnology (জীবপ্রযুক্তি)" },
+          { id: "v-bio-1-ch12", name: "Organisms and Environment (জীবের পরিবেশ, বিস্তার ও সংরক্ষণ)" }
+        ],
+        "v-bio-2": [
+          { id: "v-bio-2-ch1", name: "Animal Diversity and Classification (প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস)" },
+          { id: "v-bio-2-ch2", name: "Animal Introduction (প্রাণীর পরিচিতি)" },
+          { id: "v-bio-2-ch3", name: "Human Physiology: Digestion and Absorption (মানব শারীরতত্ত্ব: পরিপাক ও শোষণ)" },
+          { id: "v-bio-2-ch4", name: "Human Physiology: Circulation and Blood (মানব শারীরতত্ত্ব: রক্ত ও সঞ্চালন)" },
+          { id: "v-bio-2-ch5", name: "Human Physiology: Breathing and Respiration (মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন)" },
+          { id: "v-bio-2-ch6", name: "Human Physiology: Excretion and Elimination (মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন)" },
+          { id: "v-bio-2-ch7", name: "Human Physiology: Locomotion and Movement (মানব শারীরতত্ত্ব: চলন ও অঙ্গচালনা)" },
+          { id: "v-bio-2-ch8", name: "Human Physiology: Coordination and Control (মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ)" },
+          { id: "v-bio-2-ch9", name: "Human Continuity of Life (মানবধারা বাহিকতা)" },
+          { id: "v-bio-2-ch10", name: "Defense of Human Body (মানবদেহের প্রতিরক্ষা)" },
+          { id: "v-bio-2-ch11", name: "Genetics and Evolution (জিনতত্ত্ব ও বিবর্তন)" },
+          { id: "v-bio-2-ch12", name: "Animal Behavior (প্রাণীর আচরণ)" }
+        ], 
+        "m-phy-1": [
+          { id: "m-phy-1-ch1", name: "Physical World and Measurement (ভৌতজগৎ ও পরিমাপ)" },
+          { id: "m-phy-1-ch2", name: "Vector (ভেক্টর)" },
+          { id: "m-phy-1-ch3", name: "Dynamics (গতিবিদ্যা)" },
+          { id: "m-phy-1-ch4", name: "Newtonian Mechanics (নিউটোনিয়ান বলবিদ্যা)" },
+          { id: "m-phy-1-ch5", name: "Work, Energy and Power (কাজ, ক্ষমতা ও শক্তি)" },
+          { id: "m-phy-1-ch6", name: "Gravitation and Gravity (মহাকর্ষ ও অভিকর্ষ)" },
+          { id: "m-phy-1-ch7", name: "Structural Properties of Matter (পদার্থের গাঠনিক ধর্ম)" },
+          { id: "m-phy-1-ch8", name: "Periodic Motion (পর্যায়বৃত্ত গতি)" },
+          { id: "m-phy-1-ch9", name: "Waves (তরঙ্গ)" },
+          { id: "m-phy-1-ch10", name: "Ideal Gas and Kinetic Theory of Gases (আদর্শ গ্যাস ও গ্যাসের গতিতত্ত্ব)" }
+        ],
+        "m-phy-2": [
+          { id: "m-phy-2-ch1", name: "Thermodynamics (তাপগতিবিদ্যা)" },
+          { id: "m-phy-2-ch2", name: "Electrostatics (স্থির তড়িৎ)" },
+          { id: "m-phy-2-ch3", name: "Current Electricity (চল তড়িৎ)" },
+          { id: "m-phy-2-ch4", name: "Magnetic Effects of Electric Current and Magnetism (তড়িৎ প্রবাহের চৌম্বক ক্রিয়া ও চৌম্বকত্ব)" },
+          { id: "m-phy-2-ch5", name: "Electromagnetic Induction and Alternating Current (তাড়িৎচৌম্বকীয় আবেশ ও পরিবর্তী প্রবাহ)" },
+          { id: "m-phy-2-ch6", name: "Geometrical Optics (জ্যামিতিক আলোকবিজ্ঞান)" },
+          { id: "m-phy-2-ch7", name: "Wave Optics (ভৌত আলোকবিজ্ঞান)" },
+          { id: "m-phy-2-ch8", name: "Introduction to Modern Physics (আধুনিক পদার্থবিজ্ঞানের সূচনা)" },
+          { id: "m-phy-2-ch9", name: "Atomic Model and Nuclear Physics (পরমাণুর মডেল ও নিউক্লিয়ার পদার্থবিজ্ঞান)" },
+          { id: "m-phy-2-ch10", name: "Semiconductor and Electronics (সেমিকন্ডাক্টর ও ইলেকট্রনিক্স)" },
+          { id: "m-phy-2-ch11", name: "Astronomy (জ্যোতির্বিজ্ঞান)" }
+        ],
+        "m-chem-1": [
+          { id: "m-che-1-ch1", name: "Safe Use of Laboratory (ল্যাবরেটরির নিরাপদ ব্যবহার)" },
+          { id: "m-che-1-ch2", name: "Qualitative Chemistry (গুণগত রসায়ন)" },
+          { id: "m-che-1-ch3", name: "Periodic Properties and Chemical Bonding (মৌলের পর্যায়বৃত্ত ধর্ম ও রাসায়নিক বন্ধন)" },
+          { id: "m-che-1-ch4", name: "Chemical Change (রাসায়নিক পরিবর্তন)" },
+          { id: "m-che-1-ch5", name: "Economic Chemistry (কর্মমুখী রসায়ন)" }
+        ],
+        "m-chem-2": [
+          { id: "m-che-2-ch1", name: "Environmental Chemistry (পরিবেশগত রসায়ন)" },
+          { id: "m-che-2-ch2", name: "Organic Chemistry (জৈব রসায়ন)" },
+          { id: "m-che-2-ch3", name: "Quantitative Chemistry (পরিমাণগত রসায়ন)" },
+          { id: "m-che-2-ch4", name: "Electrochemistry (তড়িৎ রসায়ন)" },
+          { id: "m-che-2-ch5", name: "Industrial Chemistry (অর্থনৈতিক রসায়ন)" }
+        ],
+        "m-bio-1": [
+          { id: "m-bio-1-ch1", name: "Cell and its Structure (কোষ ও এর গঠন)" },
+          { id: "m-bio-1-ch2", name: "Cell Division (কোষ বিভাজন)" },
+          { id: "m-bio-1-ch3", name: "Cell Chemistry (কোষ রসায়ন)" },
+          { id: "m-bio-1-ch4", name: "Microorganisms (অণুজীব)" },
+          { id: "m-bio-1-ch5", name: "Algae and Fungi (শৈবাল ও ছত্রাক)" },
+          { id: "m-bio-1-ch6", name: "Bryophyta and Pteridophyta (ব্রায়োফাইটা ও ট্র্যাকিওফাইটা)" },
+          { id: "m-bio-1-ch7", name: "Gymnosperms and Angiosperms (নগ্নজীবী ও আবৃতজীবী উদ্ভিদ)" },
+          { id: "m-bio-1-ch8", name: "Tissue and Tissue System (টিস্যু ও টিস্যুতন্ত্র)" },
+          { id: "m-bio-1-ch9", name: "Plant Physiology (উদ্ভিদ শারীরতত্ত্ব)" },
+          { id: "m-bio-1-ch10", name: "Plant Reproduction (উদ্ভিদ প্রজনন)" },
+          { id: "m-bio-1-ch11", name: "Biotechnology (জীবপ্রযুক্তি)" },
+          { id: "m-bio-1-ch12", name: "Organisms and Environment (জীবের পরিবেশ, বিস্তার ও সংরক্ষণ)" }
+        ],
+        "m-bio-2": [
+          { id: "m-bio-2-ch1", name: "Animal Diversity and Classification (প্রাণীর বিভিন্নতা ও শ্রেণীবিন্যাস)" },
+          { id: "m-bio-2-ch2", name: "Animal Introduction (প্রাণীর পরিচিতি)" },
+          { id: "m-bio-2-ch3", name: "Human Physiology: Digestion and Absorption (মানব শারীরতত্ত্ব: পরিপাক ও শোষণ)" },
+          { id: "m-bio-2-ch4", name: "Human Physiology: Circulation and Blood (মানব শারীরতত্ত্ব: রক্ত ও সঞ্চালন)" },
+          { id: "m-bio-2-ch5", name: "Human Physiology: Breathing and Respiration (মানব শারীরতত্ত্ব: শ্বাসক্রিয়া ও শ্বসন)" },
+          { id: "m-bio-2-ch6", name: "Human Physiology: Excretion and Elimination (মানব শারীরতত্ত্ব: বর্জ্য ও নিষ্কাশন)" },
+          { id: "m-bio-2-ch7", name: "Human Physiology: Locomotion and Movement (মানব শারীরতত্ত্ব: চলন ও অঙ্গচালনা)" },
+          { id: "m-bio-2-ch8", name: "Human Physiology: Coordination and Control (মানব শারীরতত্ত্ব: সমন্বয় ও নিয়ন্ত্রণ)" },
+          { id: "m-bio-2-ch9", name: "Human Continuity of Life (মানবধারা বাহিকতা)" },
+          { id: "m-bio-2-ch10", name: "Defense of Human Body (মানবদেহের প্রতিরক্ষা)" },
+          { id: "m-bio-2-ch11", name: "Genetics and Evolution (জিনতত্ত্ব ও বিবর্তন)" },
+          { id: "m-bio-2-ch12", name: "Animal Behavior (প্রাণীর আচরণ)" }
+        ]
+      },
+
+      // Classes mapped by Chapter ID
+      classes: {
+        "v-chem-1-ch3": [
+          {
+            id: "cls-1",
+            title: "Class 1 : মৌলের পর্যাবৃত্ত ধর্ম ०१",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=ND6sMZet0ug",
+            pdfUrl: "https://drive.google.com/file/d/1KMvlYz0Yh-vIT3cFOgkWsm-9iMFZanyU/view"
+          },
+          {
+            id: "cls-2",
+            title: "Class 2 : মৌলের পর্যাবৃত্ত ধর্ম ०२",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=Mm3Om9X9H6Q&feature=youtu.be",
+            pdfUrl: "https://drive.google.com/file/d/1RODwBM5Y8mIAGNiOHd2o_7GdwSx0HWua/view"
+          },
+          {
+            id: "cls-3",
+            title: "Class 3 : মৌলের পর্যাবৃত্ত ধর্ম ०३",
+            topics: " ",
+            youtubeUrl: "youtube.com/watch?v=2lTeYAoBAmM&feature=youtu.be",
+            pdfUrl: "https://drive.google.com/file/d/18viircK-2ZX4Bv5_O-UI5_reex1ruzFl/view"
+          }
+        ],
+        "v-math-1-ch3": [
+          {
+            id: "cls-1",
+            title: "Class 1 : সরলরেখা পর্ব ०१",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=ZPgGgGJ_P7A",
+            pdfUrl: "https://drive.google.com/file/d/1PpmDT33N74SzOGl36XKzDbkjV-RkXkTd/view"
+          },
+          {
+            id: "cls-2",
+            title: "Class 2 : সরলরেখা পর্ব २ पার्ट १",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=adsWX3ctzg0",
+            pdfUrl: "https://drive.google.com/file/d/1jk4TsDJjdqfUqUv2rB9PuOjq1XoZ4bjC/view"
+          },
+          {
+            id: "cls-3",
+            title: "Class 3 : সরলরেখা পর্ব २ पार्ट २",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=rYOoSpLJsp0",
+            pdfUrl: "https://drive.google.com/file/d/1jk4TsDJjdqfUqUv2rB9PuOjq1XoZ4bjC/view"
+          }
+        ],
+        "v-math-1-ch4": [
+          {
+            id: "cls-1",
+            title: "Class 1 : বৃত্ত পর્ব १ पार्ट १",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=fGlxi1bOqNU",
+            pdfUrl: "https://drive.google.com/file/d/1PPcEjBK_orl9RvT5sN-Y2vwYnAqHc2g5/view"
+          },
+          {
+            id: "cls-2",
+            title: "Class 2 : বৃত្ त પর्ब १ પार્ত २",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=dehDP2zzHi4",
+            pdfUrl: "https://drive.google.com/file/d/18C_jpSw9pClcS-XqVFtbn0ArldsL-aHW/view"
+          }
+        ],
+        "v-bio-2-ch1": [
+          {
+            id: "cls-1",
+            title: "Class 1 : প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=LYfIdN-UsQU",
+            pdfUrl: "https://drive.google.com/file/d/1cl9gYlwh5JprLTuh0P94qHBBuggHBD2r/view"
+          }
+        ],
+        "v-bio-1-ch7": [
+          {
+            id: "cls-1",
+            title: "Class 1 : নগ্নবীজী ও আবৃতবীজী উদ্ভিদ",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=elFBvJvzPtg",
+            pdfUrl: "https://drive.google.com/file/d/1cZqJTkxS1NojsNBTobvcsiALkUbUYK2h/view"
+          }
+        ],
+        "v-phy-1-ch2": [
+          {
+            id: "cls-1",
+            title: "Class 1 : ভেক્તর પર્ब १ पाठ १",
+            topics: "Vector Addition, Dot Product, Cross Product",
+            youtubeUrl: "https://www.youtube.com/watch?v=HWiqe34wKbs",
+            pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
+          },
+          {
+            id: "cls-2",
+            title: "Class 2 : ভেctor પર્ব १ पाठ २",
+            topics: "Gradient, Divergence, Curl",
+            youtubeUrl: "https://www.youtube.com/watch?v=K17X8voF4bo&feature=youtu.be",
+            pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
+          },
+          {
+            id: "cls-3",
+            title: "Class 3 : Vector ( પર્ব २ पाठ १ )",
+            topics: "Gradient, Divergence, Curl",
+            youtubeUrl: "https://www.youtube.com/watch?v=-LahLBzb4D8",
+            pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
+          }
+        ],
+        "v-phy-1-ch3": [
+          {
+            id: "cls-1",
+            title: "Class 1 : গতিবিদ્યা 01",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=n5FS-Zyz33w",
+            pdfUrl: "https://drive.google.com/file/d/1u2kJjBdFAUpsCcmqTLywiv3ZP26kxYgN/view"
+          },
+          {
+            id: "cls-2",
+            title: "Class 2 : গતিबिद્યा લेकچur 02",
+            topics: " ",
+            youtubeUrl: "https://www.youtube.com/watch?v=gZ18hAXTCFM&feature=youtu.be",
+            pdfUrl: "https://drive.google.com/file/d/1_7F0oQ1IQIx9tUYdRTioG7B305KyayS3/view"
+          }
+        ]
+      }
+    };
+
+    let navigationHistory = ['home'];
+
+    function getYoutubeId(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    // STOP VIDEO FUNCTION - Clears video when navigating away
     function stopVideo() {
       const frame = document.getElementById('video-frame');
       frame.src = '';
     }
 
     function navigateTo(viewId, pushState = true) {
+      // Stop video when navigating away from player view
       if (viewId !== 'player') {
         stopVideo();
       }
@@ -18,3 +574,101 @@
         navigationHistory.push(viewId);
       }
     }
+
+    function goBack() {
+      if (navigationHistory.length > 1) {
+        navigationHistory.pop();
+        const previousView = navigationHistory[navigationHistory.length - 1];
+        navigateTo(previousView, false);
+      }
+    }
+
+    function selectTrack(trackKey) {
+      const track = courseData[trackKey];
+      document.getElementById('subject-heading').innerText = track.title;
+      
+      const container = document.getElementById('subjects-grid');
+      container.innerHTML = '';
+
+      track.subjects.forEach(sub => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h3>${sub.name}</h3>`;
+        card.onclick = () => selectSubject(sub.id, sub.name);
+        container.appendChild(card);
+      });
+
+      navigateTo('subjects');
+    }
+
+    function selectSubject(subjectId, subjectName) {
+      document.getElementById('chapter-heading').innerText = subjectName;
+      const container = document.getElementById('chapters-grid');
+      container.innerHTML = '';
+
+      const chapterList = courseData.chapters[subjectId] || [];
+
+      if (chapterList.length === 0) {
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-muted);">No chapters added yet.</p>';
+      } else {
+        chapterList.forEach(ch => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `<h3>${ch.name}</h3>`;
+          card.onclick = () => selectChapter(ch.id, ch.name);
+          container.appendChild(card);
+        });
+      }
+
+      navigateTo('chapters');
+    }
+
+    function selectChapter(chapterId, chapterName) {
+      document.getElementById('class-heading').innerText = chapterName;
+      const container = document.getElementById('classes-grid');
+      container.innerHTML = '';
+
+      const classList = courseData.classes[chapterId] || [];
+
+      if (classList.length === 0) {
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-muted);">No classes added for this chapter yet.</p>';
+      } else {
+        classList.forEach(cls => {
+          const ytId = getYoutubeId(cls.youtubeUrl);
+          const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : '';
+
+          const card = document.createElement('div');
+          card.className = 'class-card';
+          card.innerHTML = `
+            <div class="thumbnail-box" onclick="playVideo('${cls.title}', '${cls.youtubeUrl}', '${cls.pdfUrl}')">
+              <img src="${thumbUrl}" alt="${cls.title}">
+            </div>
+            <div class="class-content">
+              <h3 class="class-title">${cls.title}</h3>
+              <p class="topics-list"><strong>Topics:</strong> ${cls.topics}</p>
+              <div class="materials-label">Lesson Materials:</div>
+              <a href="${cls.pdfUrl}" target="_blank" class="btn-sheet">Lecture Sheet</a>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      navigateTo('classes');
+    }
+
+    function playVideo(title, youtubeUrl, pdfUrl) {
+      const ytId = getYoutubeId(youtubeUrl);
+      document.getElementById('player-title').innerText = title;
+      
+      const pdfBtn = document.getElementById('player-pdf-btn');
+      pdfBtn.href = pdfUrl;
+      
+      const frame = document.getElementById('video-frame');
+      frame.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3`;
+
+      navigateTo('player');
+    }
+  </script>
+</body>
+</html>
