@@ -3,107 +3,280 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title >Education Hub</title>
+  <title>Education Hub - Learn Smarter</title>
   <style>
+    /* ===== ROOT & VARIABLES ===== */
     :root {
-      --bg-color: #0b0f19;
-      --card-bg: #131a2a;
-      --card-hover: #1a243b;
-      --accent-blue: #2563eb;
-      --accent-hover: #1d4ed8;
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
-      --border-color: #1e293b;
+      --bg-primary: #0f1419;
+      --bg-secondary: #1a1f2e;
+      --bg-tertiary: #232a3a;
+      --accent-blue: #3b82f6;
+      --accent-purple: #a855f7;
+      --accent-red: #ef4444;
+      --text-primary: #ffffff;
+      --text-secondary: #a0aec0;
+      --border-color: #2d3748;
+      --success: #10b981;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s ease;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-main);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
       min-height: 100vh;
     }
 
-    .navbar {
-      background: #070a12;
-      border-bottom: 1px solid var(--border-color);
-      padding: 1rem 2rem;
+    /* ===== CONTAINER ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+      border-bottom: 2px solid var(--accent-blue);
+      padding: 20px 0;
+      box-shadow: var(--shadow);
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
+    .header .container {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 1.5rem;
     }
 
     .logo {
-      font-size: 1.3rem;
-      color: var(--text-main);
       cursor: pointer;
-      font-weight: bold;
     }
 
-    .btn-back {
-      background: #1e293b;
-      color: var(--text-main);
+    .logo h1 {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo .tagline {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    .back-btn {
+      background-color: var(--accent-blue);
+      color: white;
       border: none;
-      padding: 0.4rem 1rem;
+      padding: 10px 20px;
       border-radius: 6px;
       cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
       display: none;
-      font-weight: bold;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+    .back-btn:hover {
+      background-color: #2563eb;
+      transform: translateX(-3px);
     }
 
-    .page-view { display: none; }
-    .page-view.active { display: block; }
+    /* ===== MAIN CONTENT ===== */
+    .main {
+      min-height: calc(100vh - 200px);
+      padding: 40px 0;
+    }
 
-    .section-title {
+    /* ===== SCREENS ===== */
+    .screen {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== HOME SCREEN ===== */
+    .hero {
       text-align: center;
-      color: #38bdf8;
-      margin-bottom: 2rem;
-      font-size: 1.8rem;
+      margin-bottom: 50px;
     }
 
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
-    .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .hero h2 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+    }
+
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .path-card {
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+      border: 2px solid var(--border-color);
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 40px 30px;
+      text-align: center;
       cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
     }
 
-    .card:hover {
-      transform: translateY(-4px);
+    .path-card:hover {
       border-color: var(--accent-blue);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
     }
 
-    .card h2, .card h3 { color: var(--text-main); margin-bottom: 0.5rem; }
-    .card p { color: var(--text-muted); font-size: 0.9rem; }
+    .path-icon {
+      font-size: 54px;
+      margin-bottom: 20px;
+    }
+
+    .path-card h3 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+
+    .path-card p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ===== SCREEN HEADER ===== */
+    .screen-header {
+      margin-bottom: 40px;
+    }
+
+    .screen-header h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-primary);
+      border-left: 4px solid var(--accent-blue);
+      padding-left: 15px;
+    }
+
+    /* ===== SUBJECTS & CHAPTERS GRIDS ===== */
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .subject-card {
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 30px;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      animation: slideUp 0.4s ease-out;
+    }
+
+    .subject-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    }
+
+    .subject-card:hover {
+      border-color: var(--accent-purple);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(168, 85, 247, 0.2);
+    }
+
+    .subject-card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* ===== CLASS CARDS GRID ===== */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
 
     .class-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+      border: 2px solid var(--border-color);
       border-radius: 12px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      animation: slideUp 0.4s ease-out;
+    }
+
+    .class-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-6px);
+      box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
     }
 
     .thumbnail-box {
@@ -121,111 +294,222 @@
     }
 
     .class-content {
-      padding: 1rem;
+      padding: 1.25rem;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
     }
 
-    .class-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
-    .topics-list { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; flex-grow: 1; }
-    .materials-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem; }
+    .class-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .topics-list {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+
+    .materials-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.4rem;
+    }
 
     .btn-sheet {
       display: inline-block;
-      background: var(--accent-blue);
+      background-color: var(--accent-blue);
       color: white;
       text-decoration: none;
-      padding: 0.5rem 1rem;
+      padding: 10px 16px;
       border-radius: 6px;
       font-size: 0.85rem;
-      font-weight: bold;
+      font-weight: 600;
       text-align: center;
       border: none;
       cursor: pointer;
+      transition: var(--transition);
     }
 
-    .btn-sheet:hover { background: var(--accent-hover); }
+    .btn-sheet:hover {
+      background-color: #2563eb;
+      transform: translateY(-2px);
+    }
+
+    /* ===== VIDEO PLAYER SCREEN ===== */
+    .player-container {
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      margin-bottom: 40px;
+    }
 
     .player-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .player-header h2 {
+      font-size: 24px;
+      color: var(--text-primary);
     }
 
     .video-wrapper {
       position: relative;
+      width: 100%;
       padding-bottom: 56.25%;
       height: 0;
-      background: #000;
-      border-radius: 12px;
       overflow: hidden;
+      border-radius: 10px;
+      background: #000;
       border: 1px solid var(--border-color);
     }
 
     .video-wrapper iframe {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       border: none;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--bg-secondary);
+      border-top: 2px solid var(--border-color);
+      padding: 30px 0;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .footer p {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+      .header .container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      .logo h1 { font-size: 24px; }
+      .hero h2 { font-size: 32px; }
+      .path-grid { grid-template-columns: 1fr; gap: 20px; }
+      .subjects-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+      .screen-header h2 { font-size: 24px; }
+      .player-header h2 { font-size: 20px; }
     }
   </style>
 </head>
 <body>
 
-  <header class="navbar">
-    <div class="nav-container">
-      <button id="back-btn" class="btn-back" onclick="goBack()">← back</button>
-      <h1 class="logo" onclick="navigateTo('home')">Education Hub</h1>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="logo" onclick="navigateTo('home')">
+        <h1>Education Hub</h1>
+        <p class="tagline">Master Your Subjects</p>
+      </div>
+      <nav class="nav">
+        <button id="back-btn" class="back-btn" onclick="goBack()">← Back</button>
+      </nav>
     </div>
   </header>
 
-  <main class="container">
-    <!-- View 1: Track Selection -->
-    <section id="view-home" class="page-view active">
-      <h2 class="section-title">Select Track</h2>
-      <div class="grid-2">
-        <div class="card track-card" onclick="selectTrack('varsity')">
-          <h2>Varsity Preparation</h2>
-          <p>Physics, Chemistry, Higher Math, Biology, English, ICT</p>
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      
+      <!-- View 1: Track Selection -->
+      <section id="view-home" class="screen active">
+        <div class="hero">
+          <h2>Select Track</h2>
+          <p>Choose your target preparation pathway</p>
         </div>
-        <div class="card track-card" onclick="selectTrack('medical')">
-          <h2>Medical Preparation</h2>
-          <p>Physics, Chemistry, Biology, English, General Knowledge</p>
+        <div class="path-grid">
+          <div class="path-card" onclick="selectTrack('varsity')">
+            <div class="path-icon">🏛️</div>
+            <h3>Varsity Preparation</h3>
+            <p>Physics, Chemistry, Higher Math, Biology, English, ICT</p>
+          </div>
+          <div class="path-card" onclick="selectTrack('medical')">
+            <div class="path-icon">🩺</div>
+            <h3>Medical Preparation</h3>
+            <p>Physics, Chemistry, Biology, English, General Knowledge</p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- View 2: Subject List -->
-    <section id="view-subjects" class="page-view">
-      <h2 id="subject-heading" class="section-title">Subjects</h2>
-      <div id="subjects-grid" class="grid-3"></div>
-    </section>
+      <!-- View 2: Subject List -->
+      <section id="view-subjects" class="screen">
+        <div class="screen-header">
+          <h2 id="subject-heading">Subjects</h2>
+        </div>
+        <div id="subjects-grid" class="subjects-grid"></div>
+      </section>
 
-    <!-- View 3: Chapter List -->
-    <section id="view-chapters" class="page-view">
-      <h2 id="chapter-heading" class="section-title">Chapters</h2>
-      <div id="chapters-grid" class="grid-3"></div>
-    </section>
+      <!-- View 3: Chapter List -->
+      <section id="view-chapters" class="screen">
+        <div class="screen-header">
+          <h2 id="chapter-heading">Chapters</h2>
+        </div>
+        <div id="chapters-grid" class="subjects-grid"></div>
+      </section>
 
-    <!-- View 4: Class Cards -->
-    <section id="view-classes" class="page-view">
-      <h2 id="class-heading" class="section-title">Classes</h2>
-      <div id="classes-grid" class="grid-cards"></div>
-    </section>
+      <!-- View 4: Class Cards -->
+      <section id="view-classes" class="screen">
+        <div class="screen-header">
+          <h2 id="class-heading">Classes</h2>
+        </div>
+        <div id="classes-grid" class="grid-cards"></div>
+      </section>
 
-    <!-- View 5: Video Player -->
-    <section id="view-player" class="page-view">
-      <div class="player-header">
-        <h2 id="player-title">Class Lecture</h2>
-        <a id="player-pdf-btn" target="_blank" class="btn-sheet">Lecture Sheet</a>
-      </div>
-      <div class="video-wrapper">
-        <iframe id="video-frame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </section>
+      <!-- View 5: Video Player -->
+      <section id="view-player" class="screen">
+        <div class="player-container">
+          <div class="player-header">
+            <h2 id="player-title">Class Lecture</h2>
+            <a id="player-pdf-btn" target="_blank" class="btn-sheet">📄 Lecture Sheet</a>
+          </div>
+          <div class="video-wrapper">
+            <iframe id="video-frame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© Education Hub. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script>
     const courseData = {
@@ -258,7 +542,6 @@
         ]
       },
       
-      // Chapters mapped by Subject ID
       chapters: {
         "v-phy-1": [
           { id: "v-phy-1-ch1", name: "Physical World and Measurement (ভৌত জগৎ ও পরিমাপ)" },
@@ -420,7 +703,6 @@
         ]
       },
 
-      // Classes mapped by Chapter ID
       classes: {
         "v-chem-1-ch3": [
           {
@@ -547,24 +829,23 @@
     let navigationHistory = ['home'];
 
     function getYoutubeId(url) {
+      if (!url) return null;
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
       const match = url.match(regExp);
       return (match && match[2].length === 11) ? match[2] : null;
     }
 
-    // STOP VIDEO FUNCTION - Clears video when navigating away
     function stopVideo() {
       const frame = document.getElementById('video-frame');
       frame.src = '';
     }
 
     function navigateTo(viewId, pushState = true) {
-      // Stop video when navigating away from player view
       if (viewId !== 'player') {
         stopVideo();
       }
 
-      document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
       document.getElementById(`view-${viewId}`).classList.add('active');
 
       const backBtn = document.getElementById('back-btn');
@@ -573,6 +854,8 @@
       if (pushState) {
         navigationHistory.push(viewId);
       }
+      
+      window.scrollTo(0, 0);
     }
 
     function goBack() {
@@ -592,7 +875,7 @@
 
       track.subjects.forEach(sub => {
         const card = document.createElement('div');
-        card.className = 'card';
+        card.className = 'subject-card';
         card.innerHTML = `<h3>${sub.name}</h3>`;
         card.onclick = () => selectSubject(sub.id, sub.name);
         container.appendChild(card);
@@ -609,11 +892,11 @@
       const chapterList = courseData.chapters[subjectId] || [];
 
       if (chapterList.length === 0) {
-        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-muted);">No chapters added yet.</p>';
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-secondary);">No chapters added yet.</p>';
       } else {
         chapterList.forEach(ch => {
           const card = document.createElement('div');
-          card.className = 'card';
+          card.className = 'subject-card';
           card.innerHTML = `<h3>${ch.name}</h3>`;
           card.onclick = () => selectChapter(ch.id, ch.name);
           container.appendChild(card);
@@ -631,11 +914,11 @@
       const classList = courseData.classes[chapterId] || [];
 
       if (classList.length === 0) {
-        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-muted);">No classes added for this chapter yet.</p>';
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-secondary);">No classes added for this chapter yet.</p>';
       } else {
         classList.forEach(cls => {
           const ytId = getYoutubeId(cls.youtubeUrl);
-          const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : '';
+          const thumbUrl = ytId ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` : 'https://via.placeholder.com/640x360?text=No+Thumbnail';
 
           const card = document.createElement('div');
           card.className = 'class-card';
@@ -645,9 +928,9 @@
             </div>
             <div class="class-content">
               <h3 class="class-title">${cls.title}</h3>
-              <p class="topics-list"><strong>Topics:</strong> ${cls.topics}</p>
+              <p class="topics-list"><strong>Topics:</strong> ${cls.topics && cls.topics.trim() !== "" ? cls.topics : "N/A"}</p>
               <div class="materials-label">Lesson Materials:</div>
-              <a href="${cls.pdfUrl}" target="_blank" class="btn-sheet">Lecture Sheet</a>
+              <a href="${cls.pdfUrl}" target="_blank" class="btn-sheet">📄 Lecture Sheet</a>
             </div>
           `;
           container.appendChild(card);
@@ -665,7 +948,11 @@
       pdfBtn.href = pdfUrl;
       
       const frame = document.getElementById('video-frame');
-      frame.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3`;
+      if (ytId) {
+        frame.src = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3`;
+      } else {
+        frame.src = '';
+      }
 
       navigateTo('player');
     }
