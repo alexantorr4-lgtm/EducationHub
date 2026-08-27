@@ -911,12 +911,21 @@
 
     let navigationHistory = ['home'];
 
-    function getYoutubeId(url) {
-      if (!url) return null;
-      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-      const match = url.match(regExp);
-      return (match && match[2].length === 11) ? match[2] : null;
-    }
+  function getYoutubeId(url) {
+  if (!url) return null;
+
+  // Add https:// protocol if missing so URL extraction parses cleanly
+  let cleanedUrl = url.trim();
+  if (!cleanedUrl.startsWith('http://') && !cleanedUrl.startsWith('https://')) {
+    cleanedUrl = 'https://' + cleanedUrl;
+  }
+
+  // Regex updated to cover watch, live, shorts, embed, and short links
+  const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|live\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = cleanedUrl.match(regExp);
+
+  return (match && match[1].length === 11) ? match[1] : null;
+}
 
     function stopVideo() {
       const frame = document.getElementById('video-frame');
