@@ -3,22 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Education Hub - Learn Smarter</title>
+  <title>Education Hub - Lab Edition</title>
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    /* ===== ROOT & VARIABLES ===== */
+    /* ===== SCIENTIFIC PLAYFUL SYSTEM ===== */
     :root {
-      --bg-primary: #0f1419;
-      --bg-secondary: #1a1f2e;
-      --bg-tertiary: #232a3a;
-      --accent-blue: #3b82f6;
-      --accent-purple: #a855f7;
-      --accent-red: #ef4444;
-      --text-primary: #ffffff;
-      --text-secondary: #a0aec0;
-      --border-color: #2d3748;
-      --success: #10b981;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      --transition: all 0.3s ease;
+      --bg-dark: #070a13;
+      --panel-bg: rgba(15, 23, 42, 0.75);
+      --cyan-glow: #00f2fe;
+      --green-neon: #39ff14;
+      --purple-atomic: #9d4edf;
+      --amber-lab: #ffaa00;
+      --text-light: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-lab: rgba(0, 242, 254, 0.2);
+      --border-hover: rgba(57, 255, 20, 0.6);
+      --font-head: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
     }
 
     * {
@@ -27,32 +33,56 @@
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-      line-height: 1.5;
-      overflow-x: hidden;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-family: var(--font-body);
       min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    /* ===== CONTAINER ===== */
+    /* ===== CANVAS ANIMATED BACKDROP ===== */
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* SCIENTIFIC GRID PATTERN OVERLAY */
+    .grid-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        linear-gradient(rgba(0, 242, 254, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 254, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ===== LAYOUT ===== */
+    .app-layer {
+      position: relative;
+      z-index: 2;
+    }
+
     .container {
-      max-width: 1200px;
+      max-width: 1140px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
     /* ===== HEADER ===== */
     .header {
-      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-      border-bottom: 2px solid var(--accent-blue);
+      background: rgba(7, 10, 19, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-lab);
       padding: 16px 0;
-      box-shadow: var(--shadow);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -66,480 +96,819 @@
 
     .logo {
       cursor: pointer;
-    }
-
-    .logo h1 {
-      font-size: 24px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .logo .tagline {
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-top: 2px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .nav {
       display: flex;
-      gap: 10px;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Spinning Atom Animation */
+    .atom-box {
+      width: 44px;
+      height: 44px;
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid var(--cyan-glow);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan-glow);
+      font-size: 20px;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+    }
+
+    .atom-box i {
+      animation: spinAtom 8s linear infinite;
+    }
+
+    @keyframes spinAtom {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .logo-title h1 {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+
+    .logo-title span {
+      color: var(--cyan-glow);
+      font-size: 11px;
+      font-family: monospace;
+      letter-spacing: 1px;
+      display: block;
+      margin-top: -2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ai-btn-nav {
+      background: rgba(157, 78, 223, 0.15);
+      color: #d8b4fe;
+      border: 1px solid var(--purple-atomic);
+      padding: 8px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ai-btn-nav:hover {
+      background: var(--purple-atomic);
+      color: #fff;
+      box-shadow: 0 0 20px var(--purple-atomic);
+      transform: translateY(-2px);
     }
 
     .back-btn {
-      background-color: var(--accent-blue);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      background: rgba(0, 242, 254, 0.08);
+      color: var(--cyan-glow);
+      border: 1px solid var(--border-lab);
+      padding: 8px 18px;
+      border-radius: 30px;
       cursor: pointer;
+      font-family: var(--font-head);
+      font-size: 14px;
       font-weight: 600;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       display: none;
+      align-items: center;
+      gap: 8px;
     }
 
     .back-btn:hover {
-      background-color: #2563eb;
+      background: var(--cyan-glow);
+      color: #000;
+      box-shadow: 0 0 20px var(--cyan-glow);
+      transform: translateX(-3px);
     }
 
     /* ===== MAIN CONTENT ===== */
     .main {
-      min-height: calc(100vh - 180px);
-      padding: 30px 0;
+      padding: 40px 0 60px;
     }
 
-    /* ===== SCREENS ===== */
     .screen {
       display: none;
-      animation: fadeIn 0.3s ease-in-out;
+      opacity: 0;
+      transform: scale(0.98) translateY(15px);
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .screen.active {
       display: block;
+      opacity: 1;
+      transform: scale(1) translateY(0);
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* ===== HOME SCREEN ===== */
+    /* ===== HERO SECTION ===== */
     .hero {
       text-align: center;
       margin-bottom: 40px;
     }
 
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(57, 255, 20, 0.1);
+      border: 1px solid var(--green-neon);
+      border-radius: 20px;
+      color: var(--green-neon);
+      font-family: monospace;
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--green-neon);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green-neon);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
     .hero h2 {
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      font-family: var(--font-head);
+      font-size: 38px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, var(--cyan-glow) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
     .hero p {
+      color: var(--text-muted);
       font-size: 16px;
-      color: var(--text-secondary);
+      max-width: 550px;
+      margin: 0 auto;
     }
 
+    /* ===== PATH CARDS (HOME) ===== */
     .path-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
+      gap: 24px;
     }
 
     .path-card {
-      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 30px 20px;
-      text-align: center;
+      background: var(--panel-bg);
+      border: 1px solid var(--border-lab);
+      border-radius: 20px;
+      padding: 32px 24px;
       cursor: pointer;
-      transition: var(--transition);
-      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .path-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.15), transparent);
+      transition: 0.5s;
+    }
+
+    .path-card:hover::before {
+      left: 100%;
     }
 
     .path-card:hover {
-      border-color: var(--accent-blue);
-      transform: translateY(-4px);
+      border-color: var(--cyan-glow);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
+    }
+
+    .path-card.ai-card:hover {
+      border-color: var(--purple-atomic);
+      box-shadow: 0 10px 30px rgba(157, 78, 223, 0.3);
     }
 
     .path-icon {
-      font-size: 42px;
-      margin-bottom: 15px;
+      width: 60px;
+      height: 60px;
+      background: rgba(0, 242, 254, 0.1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: var(--cyan-glow);
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .path-icon.ai-icon {
+      background: rgba(157, 78, 223, 0.15);
+      color: #d8b4fe;
+    }
+
+    .path-card:hover .path-icon {
+      background: var(--cyan-glow);
+      color: #000;
+      transform: rotate(10deg);
+    }
+
+    .path-card.ai-card:hover .path-icon.ai-icon {
+      background: var(--purple-atomic);
+      color: #fff;
     }
 
     .path-card h3 {
+      font-family: var(--font-head);
       font-size: 22px;
       margin-bottom: 8px;
-      color: var(--text-primary);
     }
 
     .path-card p {
-      color: var(--text-secondary);
+      color: var(--text-muted);
       font-size: 14px;
       line-height: 1.5;
     }
 
-    /* ===== SCREEN HEADER ===== */
+    /* ===== SCREEN HEADERS ===== */
     .screen-header {
-      margin-bottom: 25px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px dashed var(--border-lab);
+      padding-bottom: 12px;
     }
 
     .screen-header h2 {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--text-primary);
-      border-left: 4px solid var(--accent-blue);
-      padding-left: 12px;
+      font-family: var(--font-head);
+      font-size: 26px;
+      color: #fff;
     }
 
-    /* ===== SUBJECTS & CHAPTERS GRIDS ===== */
-    .subjects-grid {
+    /* ===== SUBJECT & CHAPTER GRIDS ===== */
+    .grid-interactive {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
     }
 
-    .subject-card {
-      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
+    .lab-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-lab);
+      border-radius: 14px;
       padding: 20px;
       cursor: pointer;
-      transition: var(--transition);
-      text-align: center;
-      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.25s ease;
       position: relative;
-      overflow: hidden;
     }
 
-    .subject-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    .lab-card:hover {
+      border-color: var(--green-neon);
+      background: rgba(57, 255, 20, 0.05);
+      transform: translateX(6px);
+      box-shadow: -4px 0 0 var(--green-neon);
     }
 
-    .subject-card:hover {
-      border-color: var(--accent-purple);
-      transform: translateY(-4px);
+    .lab-card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan-glow);
+      font-size: 18px;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
     }
 
-    .subject-card h3 {
-      font-size: 17px;
+    .lab-card:hover .lab-card-icon {
+      color: var(--green-neon);
+      background: rgba(57, 255, 20, 0.15);
+      transform: scale(1.1);
+    }
+
+    .lab-card h3 {
+      font-size: 15px;
       font-weight: 600;
+      line-height: 1.3;
     }
 
     /* ===== CLASS CARDS GRID ===== */
-    .grid-cards {
+    .grid-classes {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 22px;
     }
 
     .class-card {
-      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
+      background: var(--panel-bg);
+      border: 1px solid var(--border-lab);
+      border-radius: 16px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
+      transition: all 0.3s ease;
     }
 
     .class-card:hover {
-      border-color: var(--accent-blue);
-      transform: translateY(-4px);
+      border-color: var(--purple-atomic);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(157, 78, 223, 0.3);
     }
 
-    .thumbnail-box {
+    .thumb-container {
       width: 100%;
       aspect-ratio: 16/9;
       background: #000;
-      cursor: pointer;
       position: relative;
+      cursor: pointer;
+      overflow: hidden;
     }
 
-    .thumbnail-box img {
+    .thumb-container img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.4s ease;
     }
 
-    .class-content {
-      padding: 1rem;
+    .class-card:hover .thumb-container img {
+      transform: scale(1.08);
+    }
+
+    .play-badge {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      width: 50px; height: 50px;
+      background: rgba(0, 242, 254, 0.9);
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      opacity: 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    .thumb-container:hover .play-badge {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .class-body {
+      padding: 18px;
       display: flex;
       flex-direction: column;
       flex-grow: 1;
     }
 
     .class-title {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-      color: var(--text-primary);
+      font-family: var(--font-head);
+      font-size: 16px;
+      margin-bottom: 8px;
+      line-height: 1.3;
     }
 
-    .topics-list {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
+    .topics-tag {
+      font-size: 12px;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 16px;
       flex-grow: 1;
     }
 
-    .materials-label {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      margin-bottom: 0.4rem;
-    }
-
-    .btn-sheet {
-      display: inline-block;
-      background-color: var(--accent-blue);
-      color: white;
+    .pdf-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(157, 78, 223, 0.15);
+      color: #d8b4fe;
+      border: 1px solid rgba(157, 78, 223, 0.3);
+      padding: 10px;
+      border-radius: 8px;
       text-decoration: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 13px;
       font-weight: 600;
-      text-align: center;
-      border: none;
-      cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.25s ease;
     }
 
-    .btn-sheet:hover {
-      background-color: #2563eb;
+    .pdf-btn:hover {
+      background: var(--purple-atomic);
+      color: #fff;
+      box-shadow: 0 0 15px var(--purple-atomic);
     }
 
     /* ===== VIDEO PLAYER SCREEN ===== */
-    .player-container {
-      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
+    .player-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--cyan-glow);
+      border-radius: 20px;
       padding: 20px;
-      box-shadow: var(--shadow);
-      margin-bottom: 30px;
+      box-shadow: 0 0 30px rgba(0, 242, 254, 0.15);
     }
 
-    .player-header {
+    .player-topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 16px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .player-topbar h2 {
+      font-family: var(--font-head);
+      font-size: 20px;
+    }
+
+    .screen-frame {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      border: 1px solid var(--border-lab);
+    }
+
+    .screen-frame iframe {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ===== AI TOOL SCREEN ===== */
+    .ai-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--purple-atomic);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 0 30px rgba(157, 78, 223, 0.2);
+      display: flex;
+      flex-direction: column;
+      height: 72vh;
+    }
+
+    .ai-chat-box {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      background: rgba(7, 10, 19, 0.6);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 16px;
+    }
+
+    .chat-msg {
+      display: flex;
+      gap: 12px;
+      max-width: 80%;
+    }
+
+    .chat-msg.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .chat-msg.ai {
+      align-self: flex-start;
+    }
+
+    .msg-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .chat-msg.user .msg-avatar {
+      background: var(--cyan-glow);
+      color: #000;
+    }
+
+    .chat-msg.ai .msg-avatar {
+      background: var(--purple-atomic);
+      color: #fff;
+    }
+
+    .msg-content {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.5;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .chat-msg.user .msg-content {
+      background: rgba(0, 242, 254, 0.15);
+      border-color: rgba(0, 242, 254, 0.3);
+    }
+
+    .chat-msg.ai .msg-content {
+      background: rgba(157, 78, 223, 0.15);
+      border-color: rgba(157, 78, 223, 0.3);
+    }
+
+    .ai-input-box {
+      display: flex;
       gap: 12px;
     }
 
-    .player-header h2 {
-      font-size: 18px;
-      color: var(--text-primary);
-      word-break: break-word;
+    .ai-input-box input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-lab);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s ease;
     }
 
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* Standard 16:9 Aspect Ratio */
-      height: 0;
-      overflow: hidden;
-      border-radius: 8px;
-      background: #000;
-      border: 1px solid var(--border-color);
+    .ai-input-box input:focus {
+      border-color: var(--purple-atomic);
+      box-shadow: 0 0 10px rgba(157, 78, 223, 0.3);
     }
 
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
+    .ai-send-btn {
+      background: var(--purple-atomic);
+      color: #fff;
+      border: none;
+      padding: 0 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
     }
 
-    /* ===== FOOTER ===== */
+    .ai-send-btn:hover {
+      box-shadow: 0 0 15px var(--purple-atomic);
+      transform: scale(1.05);
+    }
+
+    /* FOOTER */
     .footer {
-      background: var(--bg-secondary);
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid var(--border-lab);
       padding: 20px 0;
       text-align: center;
-      margin-top: 40px;
-    }
-
-    .footer p {
-      color: var(--text-secondary);
       font-size: 13px;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 2;
     }
 
-    /* ===== MOBILE RESPONSIVE FIXES ===== */
     @media (max-width: 600px) {
-      .container {
-        padding: 0 12px;
-      }
-
-      .main {
-        padding: 16px 0;
-      }
-
-      .header {
-        padding: 12px 0;
-      }
-
-      .logo h1 {
-        font-size: 20px;
-      }
-
-      .back-btn {
-        padding: 6px 12px;
-        font-size: 13px;
-      }
-
-      .screen-header h2 {
-        font-size: 18px;
-      }
-
-      /* Fixed Video Player Padding on Mobile */
-      .player-container {
-        padding: 10px;
-        border-radius: 8px;
-      }
-
-      .player-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .player-header h2 {
-        font-size: 15px;
-        line-height: 1.3;
-      }
-
-      .player-header .btn-sheet {
-        width: 100%;
-      }
-
-      /* Compact Grids for Phone Screens */
-      .subjects-grid, .grid-cards {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-
-      .subject-card {
-        padding: 15px;
-      }
-
-      .subject-card h3 {
-        font-size: 15px;
-      }
+      .hero h2 { font-size: 28px; }
+      .grid-interactive, .grid-classes { grid-template-columns: 1fr; }
+      .chat-msg { max-width: 90%; }
+      .ai-panel { height: 78vh; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="container">
-      <div class="logo" onclick="navigateTo('home')">
-        <h1>Education Hub</h1>
-        <p class="tagline">Master Your Subjects</p>
+  <!-- BACKGROUND ANIMATED CANVAS -->
+  <canvas id="particle-canvas"></canvas>
+  <div class="grid-overlay"></div>
+
+  <!-- APPLICATION LAYER -->
+  <div class="app-layer">
+    
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="logo" onclick="navigateTo('home')">
+          <div class="atom-box">
+            <i class="fa-solid fa-atom"></i>
+          </div>
+          <div class="logo-title">
+            <h1>Education Hub</h1>
+            <span>SCIENCE LAB v2.0</span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="ai-btn-nav" onclick="navigateTo('ai')">
+            <i class="fa-solid fa-robot"></i> AI Assistant
+          </button>
+          <button id="back-btn" class="back-btn" onclick="goBack()">
+            <i class="fa-solid fa-flask-vial"></i> Back
+          </button>
+        </div>
       </div>
-      <nav class="nav">
-        <button id="back-btn" class="back-btn" onclick="goBack()">← Back</button>
-      </nav>
-    </div>
-  </header>
+    </header>
 
-  <!-- Main Content -->
-  <main class="main">
-    <div class="container">
-      
-      <!-- View 1: Track Selection -->
-      <section id="view-home" class="screen active">
-        <div class="hero">
-          <h2>Select Track</h2>
-          <p>Choose your target preparation pathway</p>
-        </div>
-        <div class="path-grid">
-          <div class="path-card" onclick="selectTrack('varsity')">
-            <div class="path-icon">🏛️</div>
-            <h3>Varsity Preparation</h3>
-            <p>Physics, Chemistry, Higher Math, Biology, English, ICT</p>
+    <!-- Main Views -->
+    <main class="main">
+      <div class="container">
+
+        <!-- VIEW 1: HOME / TRACKS -->
+        <section id="view-home" class="screen active">
+          <div class="hero">
+            <div class="status-badge">
+              <span class="pulse-dot"></span> SYSTEM READY
+            </div>
+            <h2>Select Research Module</h2>
+            <p>Pick your target preparation track to launch interactive video lectures and laboratory material.</p>
           </div>
-          <div class="path-card" onclick="selectTrack('medical')">
-            <div class="path-icon">🩺</div>
-            <h3>Medical Preparation</h3>
-            <p>Physics, Chemistry, Biology, English, General Knowledge</p>
+          <div class="path-grid">
+            <div class="path-card" onclick="selectTrack('varsity')">
+              <div class="path-icon"><i class="fa-solid fa-microscope"></i></div>
+              <h3>Varsity Preparation</h3>
+              <p>Physics, Chemistry, Higher Math, Biology, English, ICT</p>
+            </div>
+            <div class="path-card" onclick="selectTrack('medical')">
+              <div class="path-icon"><i class="fa-solid fa-dna"></i></div>
+              <h3>Medical Preparation</h3>
+              <p>Physics, Chemistry, Biology, English, General Knowledge</p>
+            </div>
+            <div class="path-card ai-card" onclick="navigateTo('ai')">
+              <div class="path-icon ai-icon"><i class="fa-solid fa-brain"></i></div>
+              <h3>AI Lab Assistant</h3>
+              <p>Ask science questions, request problem solutions, or summarize core concepts.</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- View 2: Subject List -->
-      <section id="view-subjects" class="screen">
-        <div class="screen-header">
-          <h2 id="subject-heading">Subjects</h2>
-        </div>
-        <div id="subjects-grid" class="subjects-grid"></div>
-      </section>
-
-      <!-- View 3: Chapter List -->
-      <section id="view-chapters" class="screen">
-        <div class="screen-header">
-          <h2 id="chapter-heading">Chapters</h2>
-        </div>
-        <div id="chapters-grid" class="subjects-grid"></div>
-      </section>
-
-      <!-- View 4: Class Cards -->
-      <section id="view-classes" class="screen">
-        <div class="screen-header">
-          <h2 id="class-heading">Classes</h2>
-        </div>
-        <div id="classes-grid" class="grid-cards"></div>
-      </section>
-
-      <!-- View 5: Video Player -->
-      <section id="view-player" class="screen">
-        <div class="player-container">
-          <div class="player-header">
-            <h2 id="player-title">Class Lecture</h2>
-            <a id="player-pdf-btn" target="_blank" class="btn-sheet">📄 Lecture Sheet</a>
+        <!-- VIEW 2: SUBJECTS -->
+        <section id="view-subjects" class="screen">
+          <div class="screen-header">
+            <i class="fa-solid fa-vials" style="color: var(--cyan-glow);"></i>
+            <h2 id="subject-heading">Subjects</h2>
           </div>
-          <div class="video-wrapper">
-            <iframe id="video-frame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div id="subjects-grid" class="grid-interactive"></div>
+        </section>
+
+        <!-- VIEW 3: CHAPTERS -->
+        <section id="view-chapters" class="screen">
+          <div class="screen-header">
+            <i class="fa-solid fa-square-root-variable" style="color: var(--green-neon);"></i>
+            <h2 id="chapter-heading">Chapters</h2>
           </div>
-        </div>
-      </section>
+          <div id="chapters-grid" class="grid-interactive"></div>
+        </section>
 
-    </div>
-  </main>
+        <!-- VIEW 4: CLASSES -->
+        <section id="view-classes" class="screen">
+          <div class="screen-header">
+            <i class="fa-solid fa-film" style="color: var(--purple-atomic);"></i>
+            <h2 id="class-heading">Classes</h2>
+          </div>
+          <div id="classes-grid" class="grid-classes"></div>
+        </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <p>© Education Hub. All rights reserved.</p>
-    </div>
-  </footer>
+        <!-- VIEW 5: PLAYER -->
+        <section id="view-player" class="screen">
+          <div class="player-panel">
+            <div class="player-topbar">
+              <h2 id="player-title">Class Lecture</h2>
+              <a id="player-pdf-btn" target="_blank" class="pdf-btn">
+                <i class="fa-solid fa-file-pdf"></i> Download Lecture Sheet
+              </a>
+            </div>
+            <div class="screen-frame">
+              <iframe id="video-frame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 6: AI TOOL SCREEN -->
+        <section id="view-ai" class="screen">
+          <div class="screen-header">
+            <i class="fa-solid fa-robot" style="color: var(--purple-atomic);"></i>
+            <h2>AI Learning Assistant</h2>
+          </div>
+          <div class="ai-panel">
+            <div id="ai-chat-box" class="ai-chat-box">
+              <div class="chat-msg ai">
+                <div class="msg-avatar"><i class="fa-solid fa-robot"></i></div>
+                <div class="msg-content">
+                  Hello! I am your AI Science Assistant. How can I help with your studies today? You can ask me math or physics problems, general chemistry concepts, or revision tips!
+                </div>
+              </div>
+            </div>
+            <div class="ai-input-box">
+              <input type="text" id="ai-user-input" placeholder="Ask a question or request help..." onkeypress="handleAiKeyPress(event)">
+              <button class="ai-send-btn" onclick="sendAiMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>© Education Hub • Science & Interactive Learning Engine</p>
+      </div>
+    </footer>
+
+  </div>
 
   <script>
+    /* ===== INTERACTIVE PARTICLE CANVAS ===== */
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const particles = [];
+    const particleCount = 45;
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2 + 1,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        color: Math.random() > 0.5 ? 'rgba(0, 242, 254, ' : 'rgba(57, 255, 20, ',
+        alpha: Math.random() * 0.5 + 0.2
+      });
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 130) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 242, 254, ${0.15 - dist / 1300})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + p.alpha + ')';
+        ctx.fill();
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      });
+
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    /* ===== UNTOUCHED COURSE DATA ENGINE ===== */
     const courseData = {
       varsity: {
         title: "Varsity Track",
@@ -569,7 +938,6 @@
           { id: "m-gk", name: "General Knowledge (GK)" }
         ]
       },
-      
       chapters: {
         "v-phy-1": [
           { id: "v-phy-1-ch1", name: "Physical World and Measurement (ভৌত জগৎ ও পরিমাপ)" },
@@ -661,7 +1029,7 @@
           { id: "v-bio-2-ch10", name: "Defense of Human Body (মানবদেহের প্রতিরক্ষা)" },
           { id: "v-bio-2-ch11", name: "Genetics and Evolution (জিনতত্ত্ব ও বিবর্তন)" },
           { id: "v-bio-2-ch12", name: "Animal Behavior (প্রাণীর আচরণ)" }
-        ], 
+        ],
         "m-phy-1": [
           { id: "m-phy-1-ch1", name: "Physical World and Measurement (ভৌতজগৎ ও পরিমাপ)" },
           { id: "m-phy-1-ch2", name: "Vector (ভেক্টর)" },
@@ -730,603 +1098,202 @@
           { id: "m-bio-2-ch12", name: "Animal Behavior (প্রাণীর আচরণ)" }
         ]
       },
-
       classes: {
-         "v-math-2-ch3": [
-          {
-            id: "cls-1",
-            title: "Class 1 : জটিল সংখ্যা ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=SNKd8o3QJKU",
-            pdfUrl: "https://drive.google.com/file/d/1hhozdm5qhImlSclH1901XTmaDEuUYPAa/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : জটিল সংখ্যা ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=ZAzV9Q27f1o",
-            pdfUrl: "https://drive.google.com/file/d/101ZtXZ5NVe1bbINi1-JjUuN6AzAjShhr/view"
-          }
+        "v-math-2-ch3": [
+          { id: "cls-1", title: "Class 1 : জটিল সংখ্যা ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=SNKd8o3QJKU", pdfUrl: "https://drive.google.com/file/d/1hhozdm5qhImlSclH1901XTmaDEuUYPAa/view" },
+          { id: "cls-2", title: "Class 2 : জটিল সংখ্যা ০২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=ZAzV9Q27f1o", pdfUrl: "https://drive.google.com/file/d/101ZtXZ5NVe1bbINi1-JjUuN6AzAjShhr/view" }
         ],
-         "v-math-2-ch4": [
-          {
-            id: "cls-1",
-            title: "Class 1 : বহুপদী ০১",
-            topics: " ",
-            youtubeUrl: "http://youtube.com/watch?v=qfeaItqY4OI",
-            pdfUrl: "https://drive.google.com/file/d/1SR5UivRAqEzRZW02dqGS44eSLcuMXLdY/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 :বহুপদী ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=ZAzV9Q27f1o",
-            pdfUrl: "https://drive.google.com/file/d/101ZtXZ5NVe1bbINi1-JjUuN6AzAjShhr/view"
-          }
+        "v-math-2-ch4": [
+          { id: "cls-1", title: "Class 1 : বহুপদী ০১", topics: " ", youtubeUrl: "http://youtube.com/watch?v=qfeaItqY4OI", pdfUrl: "https://drive.google.com/file/d/1SR5UivRAqEzRZW02dqGS44eSLcuMXLdY/view" },
+          { id: "cls-2", title: "Class 2 :বহুপদী ০২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=ZAzV9Q27f1o", pdfUrl: "https://drive.google.com/file/d/101ZtXZ5NVe1bbINi1-JjUuN6AzAjShhr/view" }
         ],
-         "v-math-2-ch5": [
-          {
-            id: "cls-1",
-            title: "Class 1 : দ্বিপদী বিস্তৃতি ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=_YHoaBBiDA8",
-            pdfUrl: "https://drive.google.com/file/d/11ALH0HB-5vSzCLN8SgWFUZ_Ldh6xFIAt/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 :দ্বিপদী বিস্তৃতি ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=-L09viHxivo",
-            pdfUrl: "https://drive.google.com/file/d/1uEEg7Xa4LNatkLuJ2NJZsvX9LGGiUonI/view"
-          }
+        "v-math-2-ch5": [
+          { id: "cls-1", title: "Class 1 : দ্বিপদী বিস্তৃতি ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=_YHoaBBiDA8", pdfUrl: "https://drive.google.com/file/d/11ALH0HB-5vSzCLN8SgWFUZ_Ldh6xFIAt/view" },
+          { id: "cls-2", title: "Class 2 :দ্বিপদী বিস্তৃতি ০২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=-L09viHxivo", pdfUrl: "https://drive.google.com/file/d/1uEEg7Xa4LNatkLuJ2NJZsvX9LGGiUonI/view" }
         ],
-         "v-math-2-ch6": [
-          {
-            id: "cls-1",
-            title: "Class 1 : কনিক ০১ part ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=jC6oSx3WcJg",
-            pdfUrl: "https://drive.google.com/file/d/17qQvzheYpBOiL1hRgf9j9OOpJSOgSzP8/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 :কনিক ০১ পার্ট ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=CXYgEKz50No",
-            pdfUrl: "https://drive.google.com/file/d/17qQvzheYpBOiL1hRgf9j9OOpJSOgSzP8/view"
-          }
+        "v-math-2-ch6": [
+          { id: "cls-1", title: "Class 1 : কনিক ০১ part ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=jC6oSx3WcJg", pdfUrl: "https://drive.google.com/file/d/17qQvzheYpBOiL1hRgf9j9OOpJSOgSzP8/view" },
+          { id: "cls-2", title: "Class 2 :কনিক ০১ পার্ট ০২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=CXYgEKz50No", pdfUrl: "https://drive.google.com/file/d/17qQvzheYpBOiL1hRgf9j9OOpJSOgSzP8/view" }
         ],
-        
-       
         "m-phy-1-ch2": [
-          {
-            id: "cls-1",
-            title: "Class 1 : ভেক্টর পর্ব ১ পার্ট ১",
-            topics: "Vector Addition, Dot Product, Cross Product",
-            youtubeUrl: "https://www.youtube.com/live/ZV4NyxgcvV4",
-            pdfUrl: ""
-          }
-          // {
-          //   id: "cls-2",
-          //   title: "Class 2 : ভেক্টর পর্ব ১ পার্ট ২",
-          //   topics: "Gradient, Divergence, Curl",
-          //   youtubeUrl: "https://www.youtube.com/watch?v=K17X8voF4bo&feature=youtu.be",
-          //   pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
-          // },
-          // {
-          //   id: "cls-3",
-          //   title: "Class 3 : Vector ( পর্ব ২ পার্ট ১ )",
-          //   topics: "Gradient, Divergence, Curl",
-          //   youtubeUrl: "https://www.youtube.com/watch?v=-LahLBzb4D8",
-          //   pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
-          // }
+          { id: "cls-1", title: "Class 1 : ভেক্টর পর্ব ১ পার্ট ১", topics: "Vector Addition, Dot Product, Cross Product", youtubeUrl: "https://www.youtube.com/live/ZV4NyxgcvV4", pdfUrl: "" }
         ],
-         "m-phy-1-ch4": [
-          {
-            id: "cls-1",
-            title: "Class 1 : নিউটোনিয়ান বলবিদ্যা ১",
-            topics: "",
-            youtubeUrl: "https://youtu.be/ZV4NyxgcvV4?t=8370",
-            pdfUrl: ""
-          }
-           ],
-         "m-phy-1-ch8": [
-          {
-            id: "cls-1",
-            title: "Class 1 : পর্যায়বৃত্ত গতি ১",
-            topics: "",
-            youtubeUrl: "https://www.youtube.com/live/rJrisiiZYYE",
-            pdfUrl: ""
-          }
-           ],
+        "m-phy-1-ch4": [
+          { id: "cls-1", title: "Class 1 : নিউটোনিয়ান বলবিদ্যা ১", topics: "", youtubeUrl: "https://youtu.be/ZV4NyxgcvV4?t=8370", pdfUrl: "" }
+        ],
+        "m-phy-1-ch8": [
+          { id: "cls-1", title: "Class 1 : পর্যায়বৃত্ত গতি ১", topics: "", youtubeUrl: "https://www.youtube.com/live/rJrisiiZYYE", pdfUrl: "" }
+        ],
         "m-phy-1-ch9": [
-          {
-            id: "cls-1",
-            title: "Class 1 : তরঙ্গ ১",
-            topics: "",
-            youtubeUrl: "https://youtu.be/rJrisiiZYYE?t=7578",
-            pdfUrl: ""
-          }
-           ],
-         "m-phy-2-ch1": [
-          {
-            id: "cls-1",
-            title: "Class 1 : তাপগতিবিদ্যা ১",
-            topics: "",
-            youtubeUrl: "https://www.youtube.com/live/GJCWplINHyU",
-            pdfUrl: ""
-          }
-           ],
-         "m-phy-2-ch11": [
-          {
-            id: "cls-1",
-            title: "Class 1 : জ্যোতির্বিজ্ঞান ১",
-            topics: "",
-            youtubeUrl: "https://youtu.be/GJCWplINHyU?t=10291",
-            pdfUrl: ""
-          }
-           ],
+          { id: "cls-1", title: "Class 1 : তরঙ্গ ১", topics: "", youtubeUrl: "https://youtu.be/rJrisiiZYYE?t=7578", pdfUrl: "" }
+        ],
+        "m-phy-2-ch1": [
+          { id: "cls-1", title: "Class 1 : তাপগতিবিদ্যা ১", topics: "", youtubeUrl: "https://www.youtube.com/live/GJCWplINHyU", pdfUrl: "" }
+        ],
+        "m-phy-2-ch11": [
+          { id: "cls-1", title: "Class 1 : জ্যোতির্বিজ্ঞান ১", topics: "", youtubeUrl: "https://youtu.be/GJCWplINHyU?t=10291", pdfUrl: "" }
+        ],
         "m-bio-1-ch1": [
-          {
-            id: "cls-1",
-            title: "Class 1 : কোষ ও এর গঠন-০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/VSEp_vajH9U",
-            pdfUrl: ""
-          },
-             {
-            id: "cls-2",
-            title: "Class 2 :কোষ ও এর গঠন-০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/JD5sffFCKJg",
-            pdfUrl: ""
-          }
-           ],
+          { id: "cls-1", title: "Class 1 : কোষ ও এর গঠন-০১", topics: " ", youtubeUrl: "https://www.youtube.com/live/VSEp_vajH9U", pdfUrl: "" },
+          { id: "cls-2", title: "Class 2 :কোষ ও এর গঠন-০২", topics: " ", youtubeUrl: "https://www.youtube.com/live/JD5sffFCKJg", pdfUrl: "" }
+        ],
         "m-bio-1-ch2": [
-          {
-            id: "cls-1",
-            title: "Class 1 : কোষ বিভাজন-০১",
-            topics: " ",
-            youtubeUrl: "https://youtu.be/ZQdjYmtv2R0?t=7352",
-            pdfUrl: ""
-          }
-           ],
-          "m-bio-1-ch3": [
-          {
-            id: "cls-1",
-            title: "Class 1 : কোষ রসায়ন-০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/ZQdjYmtv2R0",
-            pdfUrl: ""
-          },
-             {
-            id: "cls-2",
-            title: "Class 2 : কোষ রসায়ন-০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/Qv1sLmaqeBc",
-            pdfUrl: ""
-          }
-            ],
-        
+          { id: "cls-1", title: "Class 1 : কোষ বিভাজন-০১", topics: " ", youtubeUrl: "https://youtu.be/ZQdjYmtv2R0?t=7352", pdfUrl: "" }
+        ],
+        "m-bio-1-ch3": [
+          { id: "cls-1", title: "Class 1 : কোষ রসায়ন-০১", topics: " ", youtubeUrl: "https://www.youtube.com/live/ZQdjYmtv2R0", pdfUrl: "" },
+          { id: "cls-2", title: "Class 2 : কোষ রসায়ন-০২", topics: " ", youtubeUrl: "https://www.youtube.com/live/Qv1sLmaqeBc", pdfUrl: "" }
+        ],
         "m-bio-2-ch3": [
-          {
-            id: "cls-1",
-            title: "Class 1 :  পরিপাক ও শোষণ-০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/ADRePJk0kuA",
-            pdfUrl: ""
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 :  পরিপাক ও শোষণ-০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/GTYz36aavA8",
-            pdfUrl: ""
-          }
-           ],
-         "m-bio-2-ch4": [
-          {
-            id: "cls-1",
-            title: "Class 1 : রক্ত ও সঞ্চালন-০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=wxaXfa3CWFQ",
-            pdfUrl: ""
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : রক্ত ও সঞ্চালন-০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/MH7iDP0oKPo",
-            pdfUrl: ""
-          }
-           ],
-         "m-chem-1-ch2": [
-          {
-            id: "cls-1",
-            title: "Class 1 : গুণগত রসায়ন -০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=1B6FVmBFpwM",
-            pdfUrl: "https://drive.google.com/file/d/1TLkGLfihw7KPT_h3QhEhEh2Mgkhs7M3J/view?usp=sharing"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : গুণগত রসায়ন -০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/WpViOIyw19M",
-            pdfUrl: "https://drive.google.com/file/d/1mZXZ6VOK7nzUUS2wF651WWTHTtWKFHFq/view?usp=sharing"
-          },
-            {
-            id: "cls-3",
-            title: "Class 3 : গুণগত রসায়ন -০৩",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/RbOlhpMwRWo",
-            pdfUrl: "https://drive.google.com/file/d/1mZXZ6VOK7nzUUS2wF651WWTHTtWKFHFq/view?usp=sharing"
-          }
-           ],
+          { id: "cls-1", title: "Class 1 : পরিপাক ও শোষণ-০১", topics: " ", youtubeUrl: "https://www.youtube.com/live/ADRePJk0kuA", pdfUrl: "" },
+          { id: "cls-2", title: "Class 2 : পরিপাক ও শোষণ-০২", topics: " ", youtubeUrl: "https://www.youtube.com/live/GTYz36aavA8", pdfUrl: "" }
+        ],
+        "m-bio-2-ch4": [
+          { id: "cls-1", title: "Class 1 : রক্ত ও সঞ্চালন-০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=wxaXfa3CWFQ", pdfUrl: "" },
+          { id: "cls-2", title: "Class 2 : রক্ত ও সঞ্চালন-০২", topics: " ", youtubeUrl: "https://www.youtube.com/live/MH7iDP0oKPo", pdfUrl: "" }
+        ],
+        "m-chem-1-ch2": [
+          { id: "cls-1", title: "Class 1 : গুণগত রসায়ন -০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=1B6FVmBFpwM", pdfUrl: "https://drive.google.com/file/d/1TLkGLfihw7KPT_h3QhEhEh2Mgkhs7M3J/view?usp=sharing" },
+          { id: "cls-2", title: "Class 2 : গুণগত রসায়ন -০২", topics: " ", youtubeUrl: "https://www.youtube.com/live/WpViOIyw19M", pdfUrl: "https://drive.google.com/file/d/1mZXZ6VOK7nzUUS2wF651WWTHTtWKFHFq/view?usp=sharing" },
+          { id: "cls-3", title: "Class 3 : গুণগত রসায়ন -০৩", topics: " ", youtubeUrl: "https://www.youtube.com/live/RbOlhpMwRWo", pdfUrl: "https://drive.google.com/file/d/1mZXZ6VOK7nzUUS2wF651WWTHTtWKFHFq/view?usp=sharing" }
+        ],
         "m-chem-1-ch3": [
-          {
-            id: "cls-1",
-            title: "Class 1 : মৌলের পর্যাবৃত্ত ধর্ম ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=c8mhMNuQQx4",
-            pdfUrl: "https://drive.google.com/file/d/1aUnObPmRK-RUF_3H3u9Ai_Bupa0BGu2Q/view?usp=sharing"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : মৌলের পর্যাবৃত্ত ধর্ম ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/cVKgnK9_nK4",
-            pdfUrl: "https://drive.google.com/file/d/1RODwBM5Y8mIAGNiOHd2o_7GdwSx0HWua/view"
-          },
-          {
-            id: "cls-3",
-            title: "Class 3 : মৌলের পর্যাবৃত্ত ধর্ম ০৩",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/zyV4uN5kk1U",
-            pdfUrl: "https://drive.google.com/file/d/18viircK-2ZX4Bv5_O-UI5_reex1ruzFl/view"
-          }
+          { id: "cls-1", title: "Class 1 : মৌলের পর্যাবৃত্ত ধর্ম ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=c8mhMNuQQx4", pdfUrl: "https://drive.google.com/file/d/1aUnObPmRK-RUF_3H3u9Ai_Bupa0BGu2Q/view?usp=sharing" },
+          { id: "cls-2", title: "Class 2 : মৌলের পর্যাবৃত্ত ধর্ম ০২", topics: " ", youtubeUrl: "https://www.youtube.com/live/cVKgnK9_nK4", pdfUrl: "https://drive.google.com/file/d/1RODwBM5Y8mIAGNiOHd2o_7GdwSx0HWua/view" },
+          { id: "cls-3", title: "Class 3 : মৌলের পর্যাবৃত্ত ধর্ম ০৩", topics: " ", youtubeUrl: "https://www.youtube.com/live/zyV4uN5kk1U", pdfUrl: "https://drive.google.com/file/d/18viircK-2ZX4Bv5_O-UI5_reex1ruzFl/view" }
         ],
         "m-chem-2-ch1": [
-          {
-            id: "cls-1",
-            title: "Class 1 : পরিবেশগত রসায়ন ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/VgKKIoUhork",
-            pdfUrl: ""
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : পরিবেশগত রসায়ন ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/live/b5t4QOKU6Xg",
-            pdfUrl: ""
-          }
-          // {
-          //   id: "cls-3",
-          //   title: "Class 3 : মৌলের পর্যাবৃত্ত ধর্ম ০৩",
-          //   topics: " ",
-          //   youtubeUrl: "https://www.youtube.com/live/zyV4uN5kk1U",
-          //   pdfUrl: "https://drive.google.com/file/d/18viircK-2ZX4Bv5_O-UI5_reex1ruzFl/view"
-          // }
+          { id: "cls-1", title: "Class 1 : পরিবেশগত রসায়ন ০১", topics: " ", youtubeUrl: "https://www.youtube.com/live/VgKKIoUhork", pdfUrl: "" },
+          { id: "cls-2", title: "Class 2 : পরিবেশগত রসায়ন ০২", topics: " ", youtubeUrl: "https://www.youtube.com/live/b5t4QOKU6Xg", pdfUrl: "" }
         ],
         "v-chem-1-ch2": [
-          {
-            id: "cls-1",
-            title: "Class 1 : গুনগত রসায়ন ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=7TBVlB5UMQM",
-            pdfUrl: "https://drive.google.com/file/d/1f1A48Lyyhb2QDvTJb0qVyYTXtRltvhYT/view"
-          }
-          // {
-          //   id: "cls-2",
-          //   title: "Class 2 : মৌলের পর্যাবৃত্ত ধর্ম ০২",
-          //   topics: " ",
-          //   youtubeUrl: "https://www.youtube.com/watch?v=Mm3Om9X9H6Q&feature=youtu.be",
-          //   pdfUrl: "https://drive.google.com/file/d/1RODwBM5Y8mIAGNiOHd2o_7GdwSx0HWua/view"
-          // },
-          // {
-          //   id: "cls-3",
-          //   title: "Class 3 : মৌলের পর্যাবৃত্ত ধর্ম ০৩",
-          //   topics: " ",
-          //   youtubeUrl: "youtube.com/watch?v=2lTeYAoBAmM&feature=youtu.be",
-          //   pdfUrl: "https://drive.google.com/file/d/18viircK-2ZX4Bv5_O-UI5_reex1ruzFl/view"
-          // }
-          //  {
-          //   id: "cls-4",
-          //   title: "Class 4 : মৌলের পর্যাবৃত্ত ধর্ম ০৪",
-          //   topics: " ",
-          //   youtubeUrl: "https://www.youtube.com/watch?v=xvy03uCJphw&feature=youtu.be",
-          //   pdfUrl: "https://drive.google.com/file/d/1eki0yclHMAtSADZk1e_lhb3gvCZxgO5X/view"
-          // }
+          { id: "cls-1", title: "Class 1 : গুনগত রসায়ন ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=7TBVlB5UMQM", pdfUrl: "https://drive.google.com/file/d/1f1A48Lyyhb2QDvTJb0qVyYTXtRltvhYT/view" }
         ],
         "v-chem-1-ch3": [
-          {
-            id: "cls-1",
-            title: "Class 1 : মৌলের পর্যাবৃত্ত ধর্ম ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=ND6sMZet0ug",
-            pdfUrl: "https://drive.google.com/file/d/1KMvlYz0Yh-vIT3cFOgkWsm-9iMFZanyU/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : মৌলের পর্যাবৃত্ত ধর্ম ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=Mm3Om9X9H6Q&feature=youtu.be",
-            pdfUrl: "https://drive.google.com/file/d/1RODwBM5Y8mIAGNiOHd2o_7GdwSx0HWua/view"
-          },
-          {
-            id: "cls-3",
-            title: "Class 3 : মৌলের পর্যাবৃত্ত ধর্ম ০৩",
-            topics: " ",
-            youtubeUrl: "youtube.com/watch?v=2lTeYAoBAmM&feature=youtu.be",
-            pdfUrl: "https://drive.google.com/file/d/18viircK-2ZX4Bv5_O-UI5_reex1ruzFl/view"
-          },
-           {
-            id: "cls-4",
-            title: "Class 4 : মৌলের পর্যাবৃত্ত ধর্ম ০৪",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=xvy03uCJphw&feature=youtu.be",
-            pdfUrl: "https://drive.google.com/file/d/1eki0yclHMAtSADZk1e_lhb3gvCZxgO5X/view"
-          }
+          { id: "cls-1", title: "Class 1 : মৌলের পর্যাবৃত্ত ধর্ম ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=ND6sMZet0ug", pdfUrl: "https://drive.google.com/file/d/1KMvlYz0Yh-vIT3cFOgkWsm-9iMFZanyU/view" },
+          { id: "cls-2", title: "Class 2 : মৌলের পর্যাবৃত্ত ধর্ম ০২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=Mm3Om9X9H6Q&feature=youtu.be", pdfUrl: "https://drive.google.com/file/d/1RODwBM5Y8mIAGNiOHd2o_7GdwSx0HWua/view" },
+          { id: "cls-3", title: "Class 3 : মৌলের পর্যাবৃত্ত ধর্ম ০৩", topics: " ", youtubeUrl: "youtube.com/watch?v=2lTeYAoBAmM&feature=youtu.be", pdfUrl: "https://drive.google.com/file/d/18viircK-2ZX4Bv5_O-UI5_reex1ruzFl/view" },
+          { id: "cls-4", title: "Class 4 : মৌলের পর্যাবৃত্ত ধর্ম ০৪", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=xvy03uCJphw&feature=youtu.be", pdfUrl: "https://drive.google.com/file/d/1eki0yclHMAtSADZk1e_lhb3gvCZxgO5X/view" }
         ],
-         "v-chem-1-ch4": [
-          {
-            id: "cls-1",
-            title: "Class 1 : রাসায়নিক পরিবর্তন  ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=V5MBunuh43Y",
-            pdfUrl: "https://drive.google.com/file/d/1y7ELw1DYHOBW2g-pRqkZlsVZxZmYQuRR/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : রাসায়নিক পরিবর্তন পর্ব ২ পার্ট ১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=OVrEx9ZirlU",
-            pdfUrl: "https://drive.google.com/file/d/1eqaP56oYHyZLtdyafGSWycGOFsZgngD7/view"
-          },
-          {
-            id: "cls-3",
-            title: "Class 3 : রাসায়নিক পরিবর্তন পর্ব 2 পার্ট 2",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=89xPwCPGDpY",
-            pdfUrl: "https://drive.google.com/file/d/1eqaP56oYHyZLtdyafGSWycGOFsZgngD7/view"
-          },
-           {
-            id: "cls-4",
-            title: "Class 4 : রাসায়নিক পরিবর্তন ০৩ part 1",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=YMVw10YOZXk",
-            pdfUrl: "https://www.youtube.com/watch?v=YMVw10YOZXk"
-          },
-           {
-            id: "cls-5",
-            title: "Class 5 : রাসায়নিক পরিবর্তন পর্ব ৩ পার্ট ২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=2sCPIGvdzYMv",
-            pdfUrl: "https://drive.google.com/file/d/1jnugkSeoerbtCvXoR_B8aoDD2E6nqVlH/view"
-          }
+        "v-chem-1-ch4": [
+          { id: "cls-1", title: "Class 1 : রাসায়নিক পরিবর্তন  ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=V5MBunuh43Y", pdfUrl: "https://drive.google.com/file/d/1y7ELw1DYHOBW2g-pRqkZlsVZxZmYQuRR/view" },
+          { id: "cls-2", title: "Class 2 : রাসায়নিক পরিবর্তন পর্ব ২ পার্ট ১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=OVrEx9ZirlU", pdfUrl: "https://drive.google.com/file/d/1eqaP56oYHyZLtdyafGSWycGOFsZgngD7/view" },
+          { id: "cls-3", title: "Class 3 : রাসায়নিক পরিবর্তন পর্ব 2 পার্ট 2", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=89xPwCPGDpY", pdfUrl: "https://drive.google.com/file/d/1eqaP56oYHyZLtdyafGSWycGOFsZgngD7/view" },
+          { id: "cls-4", title: "Class 4 : রাসায়নিক পরিবর্তন ০৩ part 1", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=YMVw10YOZXk", pdfUrl: "https://www.youtube.com/watch?v=YMVw10YOZXk" },
+          { id: "cls-5", title: "Class 5 : রাসায়নিক পরিবর্তন পর্ব ৩ পার্ট ২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=2sCPIGvdzYMv", pdfUrl: "https://drive.google.com/file/d/1jnugkSeoerbtCvXoR_B8aoDD2E6nqVlH/view" }
         ],
         "v-math-1-ch3": [
-          {
-            id: "cls-1",
-            title: "Class 1 : সরলরেখা পর্ব ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=ZPgGgGJ_P7A",
-            pdfUrl: "https://drive.google.com/file/d/1PpmDT33N74SzOGl36XKzDbkjV-RkXkTd/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : সরলরেখা পর্ব ২ পার্ট ১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=adsWX3ctzg0",
-            pdfUrl: "https://drive.google.com/file/d/1jk4TsDJjdqfUqUv2rB9PuOjq1XoZ4bjC/view"
-          },
-          {
-            id: "cls-3",
-            title: "Class 3 : সরলরেখা পর্ব ২ পার্ট ২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=rYOoSpLJsp0",
-            pdfUrl: "https://drive.google.com/file/d/1jk4TsDJjdqfUqUv2rB9PuOjq1XoZ4bjC/view"
-          }
+          { id: "cls-1", title: "Class 1 : সরলরেখা পর্ব ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=ZPgGgGJ_P7A", pdfUrl: "https://drive.google.com/file/d/1PpmDT33N74SzOGl36XKzDbkjV-RkXkTd/view" },
+          { id: "cls-2", title: "Class 2 : সরলরেখা পর্ব ২ পার্ট ১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=adsWX3ctzg0", pdfUrl: "https://drive.google.com/file/d/1jk4TsDJjdqfUqUv2rB9PuOjq1XoZ4bjC/view" },
+          { id: "cls-3", title: "Class 3 : সরলরেখা পর্ব ২ পার্ট ২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=rYOoSpLJsp0", pdfUrl: "https://drive.google.com/file/d/1jk4TsDJjdqfUqUv2rB9PuOjq1XoZ4bjC/view" }
         ],
         "v-math-1-ch4": [
-          {
-            id: "cls-1",
-            title: "Class 1 : বৃত্ত পর্ব ১ পার্ট ১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=fGlxi1bOqNU",
-            pdfUrl: "https://drive.google.com/file/d/1PPcEjBK_orl9RvT5sN-Y2vwYnAqHc2g5/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : বৃত্ত পর্ব ১ পার্ট ২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=dehDP2zzHi4",
-            pdfUrl: "https://drive.google.com/file/d/18C_jpSw9pClcS-XqVFtbn0ArldsL-aHW/view"
-          },
-          {
-            id: "cls-3",
-            title: "Class 3 : বৃত্ত পর্ব ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=cXfbvKR6_3g",
-            pdfUrl: "https://drive.google.com/file/d/1gs85RFUbtX6F5kJcLDiBuMGqly_qecmN/view"
-          }
+          { id: "cls-1", title: "Class 1 : বৃত্ত পর্ব ১ পার্ট ১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=fGlxi1bOqNU", pdfUrl: "https://drive.google.com/file/d/1PPcEjBK_orl9RvT5sN-Y2vwYnAqHc2g5/view" },
+          { id: "cls-2", title: "Class 2 : বৃত্ত পর্ব ১ পার্ট ২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=dehDP2zzHi4", pdfUrl: "https://drive.google.com/file/d/18C_jpSw9pClcS-XqVFtbn0ArldsL-aHW/view" },
+          { id: "cls-3", title: "Class 3 : বৃত্ত পর্ব ০২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=cXfbvKR6_3g", pdfUrl: "https://drive.google.com/file/d/1gs85RFUbtX6F5kJcLDiBuMGqly_qecmN/view" }
         ],
         "v-bio-2-ch1": [
-          {
-            id: "cls-1",
-            title: "Class 1 : প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=LYfIdN-UsQU",
-            pdfUrl: "https://drive.google.com/file/d/1cl9gYlwh5JprLTuh0P94qHBBuggHBD2r/view"
-          }
+          { id: "cls-1", title: "Class 1 : প্রাণীর বিভিন্নতা ও শ্রেণিবিন্যাস", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=LYfIdN-UsQU", pdfUrl: "https://drive.google.com/file/d/1cl9gYlwh5JprLTuh0P94qHBBuggHBD2r/view" }
         ],
-         "v-bio-2-ch7": [
-          {
-            id: "cls-1",
-            title: "Class 1 : চলন ও অঙ্গচালনা ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=sq1bn10kYkY",
-            pdfUrl: "https://drive.google.com/file/d/1hysIr8wX0f1_iuKw-E3GISIcBTW7UZMc/view"
-          },
-           {
-            id: "cls-2",
-            title: "Class 1 : চলন ও অঙ্গচালনা ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=WSAtL5CzjHY",
-            pdfUrl: "https://drive.google.com/file/d/10yALWuoI3GfxkQ3KlBDauCUwMg_rYU7A/view"
-          }
-           ],
+        "v-bio-2-ch7": [
+          { id: "cls-1", title: "Class 1 : চলন ও অঙ্গচালনা ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=sq1bn10kYkY", pdfUrl: "https://drive.google.com/file/d/1hysIr8wX0f1_iuKw-E3GISIcBTW7UZMc/view" },
+          { id: "cls-2", title: "Class 1 : চলন ও অঙ্গচালনা ০২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=WSAtL5CzjHY", pdfUrl: "https://drive.google.com/file/d/10yALWuoI3GfxkQ3KlBDauCUwMg_rYU7A/view" }
+        ],
         "v-bio-1-ch7": [
-          {
-            id: "cls-1",
-            title: "Class 1 : নগ্নবীজী ও আবৃতবীজী উদ্ভিদ",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=elFBvJvzPtg",
-            pdfUrl: "https://drive.google.com/file/d/1cZqJTkxS1NojsNBTobvcsiALkUbUYK2h/view"
-          }
+          { id: "cls-1", title: "Class 1 : নগ্নবীজী ও আবৃতবীজী উদ্ভিদ", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=elFBvJvzPtg", pdfUrl: "https://drive.google.com/file/d/1cZqJTkxS1NojsNBTobvcsiALkUbUYK2h/view" }
         ],
-         "v-bio-1-ch10": [
-          {
-            id: "cls-1",
-            title: "Class 1 : উদ্ভিদ প্রজনন ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=123mFKuBrtg",
-            pdfUrl: "https://drive.google.com/file/u/0/d/1cflyr8cXyMIRAIpyTw7gTvsiNBXjobOc/view?pli=1"
-          }
-          ],
-         "v-bio-1-ch11": [
-          {
-            id: "cls-1",
-            title: "Class 1 : উদ্ভিদ প্রজনন ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=ZN3__CGj7kU",
-            pdfUrl: "https://drive.google.com/file/d/1J4Wx2mKbA9ofGjPwXefBNBfY8cEXJtbw/view"
-          }
-          ],
+        "v-bio-1-ch10": [
+          { id: "cls-1", title: "Class 1 : উদ্ভিদ প্রজনন ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=123mFKuBrtg", pdfUrl: "https://drive.google.com/file/u/0/d/1cflyr8cXyMIRAIpyTw7gTvsiNBXjobOc/view?pli=1" }
+        ],
+        "v-bio-1-ch11": [
+          { id: "cls-1", title: "Class 1 : উদ্ভিদ প্রজনন ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=ZN3__CGj7kU", pdfUrl: "https://drive.google.com/file/d/1J4Wx2mKbA9ofGjPwXefBNBfY8cEXJtbw/view" }
+        ],
         "v-phy-1-ch2": [
-          {
-            id: "cls-1",
-            title: "Class 1 : ভেক্টর পর্ব ১ পার্ট ১",
-            topics: "Vector Addition, Dot Product, Cross Product",
-            youtubeUrl: "https://www.youtube.com/watch?v=HWiqe34wKbs",
-            pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : ভেক্টর পর্ব ১ পার্ট ২",
-            topics: "Gradient, Divergence, Curl",
-            youtubeUrl: "https://www.youtube.com/watch?v=K17X8voF4bo&feature=youtu.be",
-            pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
-          },
-          {
-            id: "cls-3",
-            title: "Class 3 : Vector ( পর্ব ২ পার্ট ১ )",
-            topics: "Gradient, Divergence, Curl",
-            youtubeUrl: "https://www.youtube.com/watch?v=-LahLBzb4D8",
-            pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view"
-          }
+          { id: "cls-1", title: "Class 1 : ভেক্টর পর্ব ১ পার্ট ১", topics: "Vector Addition, Dot Product, Cross Product", youtubeUrl: "https://www.youtube.com/watch?v=HWiqe34wKbs", pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view" },
+          { id: "cls-2", title: "Class 2 : ভেক্টর পর্ব ১ পার্ট ২", topics: "Gradient, Divergence, Curl", youtubeUrl: "https://www.youtube.com/watch?v=K17X8voF4bo&feature=youtu.be", pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view" },
+          { id: "cls-3", title: "Class 3 : Vector ( পর্ব ২ পার্ট ১ )", topics: "Gradient, Divergence, Curl", youtubeUrl: "https://www.youtube.com/watch?v=-LahLBzb4D8", pdfUrl: "https://drive.google.com/file/d/12nMsoHrdRyUErnBS8hg3VhqEcUgB81p9/view" }
         ],
         "v-phy-1-ch3": [
-          {
-            id: "cls-1",
-            title: "Class 1 : গতিবিদ্যা ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=n5FS-Zyz33w",
-            pdfUrl: "https://drive.google.com/file/d/1u2kJjBdFAUpsCcmqTLywiv3ZP26kxYgN/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : গতিবিদ্যা লেকচার ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=gZ18hAXTCFM&feature=youtu.be",
-            pdfUrl: "https://drive.google.com/file/d/1_7F0oQ1IQIx9tUYdRTioG7B305KyayS3/view"
-          }
+          { id: "cls-1", title: "Class 1 : গতিবিদ্যা ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=n5FS-Zyz33w", pdfUrl: "https://drive.google.com/file/d/1u2kJjBdFAUpsCcmqTLywiv3ZP26kxYgN/view" },
+          { id: "cls-2", title: "Class 2 : গতিবিদ্যা লেকচার ০২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=gZ18hAXTCFM&feature=youtu.be", pdfUrl: "https://drive.google.com/file/d/1_7F0oQ1IQIx9tUYdRTioG7B305KyayS3/view" }
         ],
         "v-phy-1-ch4": [
-          {
-            id: "cls-1",
-            title: "Class 1 : নিউটনীয় বলবিদ্যা ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=aAZu_Szlj2Q",
-            pdfUrl: "https://drive.google.com/file/d/1PBN2F8wTrL06gW32C_kz_Op12FLmtOa-/view"
-          },
-          {
-            id: "cls-2",
-            title: "Class 2 : নিউটনীয় বলবিদ্যা ০২",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=Pio4uPhvR30",
-            pdfUrl: "https://drive.google.com/file/d/1NE1iiqMPhKnAlbq53dBhYxR3NaB4mO0X/view"
-          }
+          { id: "cls-1", title: "Class 1 : নিউটনীয় বলবিদ্যা ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=aAZu_Szlj2Q", pdfUrl: "https://drive.google.com/file/d/1PBN2F8wTrL06gW32C_kz_Op12FLmtOa-/view" },
+          { id: "cls-2", title: "Class 2 : নিউটনীয় বলবিদ্যা ০২", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=Pio4uPhvR30", pdfUrl: "https://drive.google.com/file/d/1NE1iiqMPhKnAlbq53dBhYxR3NaB4mO0X/view" }
         ],
         "v-phy-1-ch5": [
-          {
-            id: "cls-1",
-            title: "Class 1 : কাজ ক্ষমতা শক্তি ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=h7BLf3Ev8oU",
-            pdfUrl: "https://drive.google.com/file/d/1g14Jyh8ZqPrlGZQi3VAxKRFFpqmkOF_G/view"
-          }
-          // {
-          //   id: "cls-2",
-          //   title: "Class 2 : কাজ ক্ষমতা শক্তি ০২",
-          //   topics: " ",
-          //   youtubeUrl: "https://www.youtube.com/watch?v=Pio4uPhvR30",
-          //   pdfUrl: "https://drive.google.com/file/d/1g14Jyh8ZqPrlGZQi3VAxKRFFpqmkOF_G/view"
-          // }
+          { id: "cls-1", title: "Class 1 : কাজ ক্ষমতা শক্তি ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=h7BLf3Ev8oU", pdfUrl: "https://drive.google.com/file/d/1g14Jyh8ZqPrlGZQi3VAxKRFFpqmkOF_G/view" }
         ],
-         "v-phy-1-ch6": [
-          {
-            id: "cls-1",
-            title: "Class 1 : মহাকর্ষ ও অভিকর্ষ ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=20DxB4gRrIw",
-            pdfUrl: "https://drive.google.com/file/d/1IysSlqCfI788h0Ytz3GJ5asGwqLxNFfk/view"
-          }
-          // {
-          //   id: "cls-2",
-          //   title: "Class 2 : মহাকর্ষ ও অভিকর্ষ ০২",
-          //   topics: " ",
-          //   youtubeUrl: "https://www.youtube.com/watch?v=Pio4uPhvR30",
-          //   pdfUrl: "https://drive.google.com/file/d/1g14Jyh8ZqPrlGZQi3VAxKRFFpqmkOF_G/view"
-          // }
+        "v-phy-1-ch6": [
+          { id: "cls-1", title: "Class 1 : মহাকর্ষ ও অভিকর্ষ ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=20DxB4gRrIw", pdfUrl: "https://drive.google.com/file/d/1IysSlqCfI788h0Ytz3GJ5asGwqLxNFfk/view" }
         ],
- "v-phy-1-ch8": [
-          {
-            id: "cls-1",
-            title: "Class 1 : পর্যাবৃত্ত গতি ০১",
-            topics: " ",
-            youtubeUrl: "https://www.youtube.com/watch?v=NE3UIza01sg",
-            pdfUrl: "https://drive.google.com/file/d/1bhlAimuzH_SMpro2cv-PynIPVpw6wEwQ/view"
-          }
-          // {
-          //   id: "cls-2",
-          //   title: "Class 2 : পর্যাবৃত্ত গতি ০২",
-          //   topics: " ",
-          //   youtubeUrl: "https://www.youtube.com/watch?v=Pio4uPhvR30",
-          //   pdfUrl: "https://drive.google.com/file/d/1g14Jyh8ZqPrlGZQi3VAxKRFFpqmkOF_G/view"
-          // }
+        "v-phy-1-ch8": [
+          { id: "cls-1", title: "Class 1 : পর্যাবৃত্ত গতি ০১", topics: " ", youtubeUrl: "https://www.youtube.com/watch?v=NE3UIza01sg", pdfUrl: "https://drive.google.com/file/d/1bhlAimuzH_SMpro2cv-PynIPVpw6wEwQ/view" }
         ]
       }
     };
 
     let navigationHistory = ['home'];
 
-  function getYoutubeId(url) {
-  if (!url) return null;
+    /* Dynamic Icon Generator for Chapter Titles */
+    function getChapterIcon(name) {
+      const lower = name.toLowerCase();
+      
+      // Physics
+      if (lower.includes('vector') || lower.includes('ভেক্টর')) return 'fa-location-arrow';
+      if (lower.includes('dynamics') || lower.includes('গতিবিদ্যা') || lower.includes('motion') || lower.includes('গতি')) return 'fa-gauge-high';
+      if (lower.includes('mechanics') || lower.includes('বলবিদ্যা')) return 'fa-gears';
+      if (lower.includes('work') || lower.includes('শক্তি') || lower.includes('power') || lower.includes('ক্ষমতা')) return 'fa-bolt';
+      if (lower.includes('gravitation') || lower.includes('মহাকর্ষ') || lower.includes('astronomy') || lower.includes('জ্যোতির্বিজ্ঞান')) return 'fa-globe-americas';
+      if (lower.includes('wave') || lower.includes('তরঙ্গ')) return 'fa-wave-square';
+      if (lower.includes('gas') || lower.includes('গ্যাস') || lower.includes('thermodynamics') || lower.includes('তাপগতিবিদ্যা')) return 'fa-fire-flame-curved';
+      if (lower.includes('electricity') || lower.includes('electrostatics') || lower.includes('তড়িৎ')) return 'fa-charging-station';
+      if (lower.includes('magnetic') || lower.includes('চৌম্বক')) return 'fa-magnet';
+      if (lower.includes('optics') || lower.includes('আলোকবিজ্ঞান')) return 'fa-eye';
+      if (lower.includes('atomic') || lower.includes('nuclear') || lower.includes('পরমাণু')) return 'fa-atom';
+      if (lower.includes('semiconductor') || lower.includes('electronics') || lower.includes('ইলেকট্রনিক্স')) return 'fa-microchip';
+      
+      // Chemistry
+      if (lower.includes('laboratory') || lower.includes('ল্যাবরেটরি')) return 'fa-vial-virus';
+      if (lower.includes('qualitative') || lower.includes('গুণগত')) return 'fa-flask';
+      if (lower.includes('periodic') || lower.includes('পর্যাবৃত্ত') || lower.includes('bonding') || lower.includes('বন্ধন')) return 'fa-table-cells';
+      if (lower.includes('organic') || lower.includes('জৈব')) return 'fa-cubes';
+      if (lower.includes('environmental') || lower.includes('পরিবেশ')) return 'fa-leaf';
+      if (lower.includes('quantitative') || lower.includes('পরিমাণগত') || lower.includes('electrochemistry')) return 'fa-scale-balanced';
 
-  // Add https:// protocol if missing so URL extraction parses cleanly
-  let cleanedUrl = url.trim();
-  if (!cleanedUrl.startsWith('http://') && !cleanedUrl.startsWith('https://')) {
-    cleanedUrl = 'https://' + cleanedUrl;
-  }
+      // Mathematics
+      if (lower.includes('matrix') || lower.includes('mats') || lower.includes('ম্যাট্রিক্স')) return 'fa-table-cells-large';
+      if (lower.includes('straight line') || lower.includes('সরলরেখা')) return 'fa-ruler-horizontal';
+      if (lower.includes('circle') || lower.includes('বৃত্ত') || lower.includes('conics') || lower.includes('কনিক')) return 'fa-circle-notch';
+      if (lower.includes('trigonometric') || lower.includes('ত্রিকোণমিতি')) return 'fa-shapes';
+      if (lower.includes('differentiation') || lower.includes('integration') || lower.includes('অন্তরীকরণ') || lower.includes('যৌগজীকরণ')) return 'fa-square-root-variable';
+      if (lower.includes('probability') || lower.includes('সম্ভাবনা')) return 'fa-dice';
+      if (lower.includes('complex') || lower.includes('জটিল') || lower.includes('polynomial') || lower.includes('বহুপদী')) return 'fa-superscript';
 
-  // Regex updated to cover watch, live, shorts, embed, and short links
-  const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|live\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
-  const match = cleanedUrl.match(regExp);
+      // Biology
+      if (lower.includes('cell') || lower.includes('কোষ')) return 'fa-circle-dot';
+      if (lower.includes('microorganism') || lower.includes('অণুজীব')) return 'fa-bacterium';
+      if (lower.includes('plant') || lower.includes('উদ্ভিদ') || lower.includes('algae') || lower.includes('ছত্রাক')) return 'fa-seedling';
+      if (lower.includes('tissue') || lower.includes('টিস্যু')) return 'fa-cubes-stacked';
+      if (lower.includes('biotechnology') || lower.includes('জীবপ্রযুক্তি')) return 'fa-dna';
+      if (lower.includes('animal') || lower.includes('প্রাণী')) return 'fa-paw';
+      if (lower.includes('blood') || lower.includes('রক্ত') || lower.includes('circulation') || lower.includes('digestion') || lower.includes('পরিাপাক')) return 'fa-heart-pulse';
+      if (lower.includes('genetics') || lower.includes('জিনতত্ত্ব')) return 'fa-code-branch';
 
-  return (match && match[1].length === 11) ? match[1] : null;
-}
+      // Default fallback
+      return 'fa-vial';
+    }
+
+    function getYoutubeId(url) {
+      if (!url) return null;
+      let cleanedUrl = url.trim();
+      if (!cleanedUrl.startsWith('http://') && !cleanedUrl.startsWith('https://')) {
+        cleanedUrl = 'https://' + cleanedUrl;
+      }
+      const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|live\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = cleanedUrl.match(regExp);
+      return (match && match[1].length === 11) ? match[1] : null;
+    }
 
     function stopVideo() {
       const frame = document.getElementById('video-frame');
@@ -1334,29 +1301,38 @@
     }
 
     function navigateTo(viewId, pushState = true) {
-      if (viewId !== 'player') {
-        stopVideo();
-      }
+      if (viewId !== 'player') stopVideo();
 
-      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-      document.getElementById(`view-${viewId}`).classList.add('active');
+      const activeScreen = document.querySelector('.screen.active');
+      if (activeScreen) activeScreen.classList.remove('active');
+
+      setTimeout(() => {
+        document.getElementById(`view-${viewId}`).classList.add('active');
+      }, 50);
 
       const backBtn = document.getElementById('back-btn');
-      backBtn.style.display = viewId === 'home' ? 'none' : 'block';
+      backBtn.style.display = viewId === 'home' ? 'none' : 'inline-flex';
 
-      if (pushState) {
-        navigationHistory.push(viewId);
-      }
-      
-      window.scrollTo(0, 0);
+      if (pushState) navigationHistory.push(viewId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function goBack() {
       if (navigationHistory.length > 1) {
         navigationHistory.pop();
-        const previousView = navigationHistory[navigationHistory.length - 1];
-        navigateTo(previousView, false);
+        navigateTo(navigationHistory[navigationHistory.length - 1], false);
       }
+    }
+
+    function getSubjectIcon(name) {
+      const lower = name.toLowerCase();
+      if (lower.includes('physics')) return 'fa-atom';
+      if (lower.includes('chemistry')) return 'fa-flask-vial';
+      if (lower.includes('math')) return 'fa-calculator';
+      if (lower.includes('biology')) return 'fa-dna';
+      if (lower.includes('english')) return 'fa-language';
+      if (lower.includes('ict')) return 'fa-microchip';
+      return 'fa-book-open';
     }
 
     function selectTrack(trackKey) {
@@ -1368,8 +1344,12 @@
 
       track.subjects.forEach(sub => {
         const card = document.createElement('div');
-        card.className = 'subject-card';
-        card.innerHTML = `<h3>${sub.name}</h3>`;
+        card.className = 'lab-card';
+        const iconClass = getSubjectIcon(sub.name);
+        card.innerHTML = `
+          <div class="lab-card-icon"><i class="fa-solid ${iconClass}"></i></div>
+          <h3>${sub.name}</h3>
+        `;
         card.onclick = () => selectSubject(sub.id, sub.name);
         container.appendChild(card);
       });
@@ -1385,12 +1365,16 @@
       const chapterList = courseData.chapters[subjectId] || [];
 
       if (chapterList.length === 0) {
-        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-secondary);">No chapters added yet.</p>';
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding: 30px;">No research data in this chapter yet.</p>';
       } else {
         chapterList.forEach(ch => {
           const card = document.createElement('div');
-          card.className = 'subject-card';
-          card.innerHTML = `<h3>${ch.name}</h3>`;
+          card.className = 'lab-card';
+          const dynamicIcon = getChapterIcon(ch.name);
+          card.innerHTML = `
+            <div class="lab-card-icon"><i class="fa-solid ${dynamicIcon}"></i></div>
+            <h3>${ch.name}</h3>
+          `;
           card.onclick = () => selectChapter(ch.id, ch.name);
           container.appendChild(card);
         });
@@ -1407,7 +1391,7 @@
       const classList = courseData.classes[chapterId] || [];
 
       if (classList.length === 0) {
-        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-secondary);">No classes added for this chapter yet.</p>';
+        container.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding: 30px;">No video logs found for this section.</p>';
       } else {
         classList.forEach(cls => {
           const ytId = getYoutubeId(cls.youtubeUrl);
@@ -1416,14 +1400,16 @@
           const card = document.createElement('div');
           card.className = 'class-card';
           card.innerHTML = `
-            <div class="thumbnail-box" onclick="playVideo('${cls.title}', '${cls.youtubeUrl}', '${cls.pdfUrl}')">
+            <div class="thumb-container" onclick="playVideo('${cls.title}', '${cls.youtubeUrl}', '${cls.pdfUrl}')">
               <img src="${thumbUrl}" alt="${cls.title}">
+              <div class="play-badge"><i class="fa-solid fa-play"></i></div>
             </div>
-            <div class="class-content">
+            <div class="class-body">
               <h3 class="class-title">${cls.title}</h3>
-              <p class="topics-list"><strong>Topics:</strong> ${cls.topics && cls.topics.trim() !== "" ? cls.topics : "N/A"}</p>
-              <div class="materials-label">Lesson Materials:</div>
-              <a href="${cls.pdfUrl}" target="_blank" class="btn-sheet">📄 Lecture Sheet</a>
+              <p class="topics-tag"><i class="fa-solid fa-flask" style="margin-right: 6px; color: var(--green-neon);"></i>${cls.topics && cls.topics.trim() !== "" ? cls.topics : "Experimental Concept Overview"}</p>
+              <a href="${cls.pdfUrl ? cls.pdfUrl : '#'}" target="_blank" class="pdf-btn" ${!cls.pdfUrl ? 'style="opacity:0.4; pointer-events:none;"' : ''}>
+                <i class="fa-solid fa-file-pdf"></i> ${cls.pdfUrl ? 'Lecture Sheet' : 'No Sheet Available'}
+              </a>
             </div>
           `;
           container.appendChild(card);
@@ -1438,7 +1424,12 @@
       document.getElementById('player-title').innerText = title;
       
       const pdfBtn = document.getElementById('player-pdf-btn');
-      pdfBtn.href = pdfUrl;
+      if(pdfUrl) {
+        pdfBtn.href = pdfUrl;
+        pdfBtn.style.display = "inline-flex";
+      } else {
+        pdfBtn.style.display = "none";
+      }
       
       const frame = document.getElementById('video-frame');
       if (ytId) {
@@ -1449,6 +1440,101 @@
 
       navigateTo('player');
     }
+
+    /* ===== AI TOOL LOGIC ===== */
+    function handleAiKeyPress(e) {
+      if (e.key === 'Enter') {
+        sendAiMessage();
+      }
+    }
+
+    function sendAiMessage() {
+      const input = document.getElementById('ai-user-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      appendChatMessage(text, 'user');
+      input.value = '';
+
+      // Simulate AI Assistant response
+      setTimeout(() => {
+        const response = generateAiResponse(text);
+        appendChatMessage(response, 'ai');
+      }, 600);
+    }
+
+    function appendChatMessage(message, sender) {
+      const chatBox = document.getElementById('ai-chat-box');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `chat-msg ${sender}`;
+
+      const iconClass = sender === 'user' ? 'fa-user' : 'fa-robot';
+
+      msgDiv.innerHTML = `
+        <div class="msg-avatar"><i class="fa-solid ${iconClass}"></i></div>
+        <div class="msg-content">${message}</div>
+      `;
+
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+   const GEMINI_API_KEY = "AIzaSyC3pRhQClrFS4H3IJm1jjGvfX_Wkyd192Y";
+
+async function generateAiResponse(query) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+  
+  const systemPrompt = "You are the official AI Assistant for Education Hub Science Lab v2.0. Your job is to help HSC candidates with university and medical admission preparation. Keep answers direct, accurate, encouraging, and concise.";
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: `${systemPrompt}\n\nStudent Query: ${query}` }]
+          }
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.candidates[0].content.parts[0].text;
+  } catch (error) {
+    console.error("Gemini API Error:", error);
+    return "Sorry, I encountered an issue reaching the AI engine. Please check your network connection or API key.";
+  }
+}
+
+async function handleUserSend() {
+  const inputEl = document.querySelector('.chat-input-field') || document.querySelector('input[type="text"]');
+  const query = inputEl.value.trim();
+  if (!query) return;
+
+  // 1. Display user message
+  appendChatMessage(query, 'user');
+  inputEl.value = '';
+
+  // 2. Display temporary loading message
+  const loadingDiv = document.createElement('div');
+  loadingDiv.className = 'chat-msg bot';
+  loadingDiv.innerHTML = `<div class="msg-content"><em>Thinking...</em></div>`;
+  chatBox.appendChild(loadingDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  // 3. Fetch response from Gemini API
+  const aiResponse = await generateAiResponse(query);
+
+  // 4. Remove loading indicator and append full response
+  chatBox.removeChild(loadingDiv);
+  appendChatMessage(aiResponse, 'bot');
+}
   </script>
 </body>
 </html>
